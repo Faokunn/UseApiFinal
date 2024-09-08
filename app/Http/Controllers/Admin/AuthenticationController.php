@@ -11,14 +11,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthenticationController
 {
-    //LOGIN FUNCTION
     public function login(Request $request) {
         $validator = Validator::make($request->all(), [
             'admin_id' => 'required|max:14',
-            'password' => 'required|min:6|max:20',
-
+            'password' => 'required|min:5|max:20',
         ]);
-
         if($validator->fails()) {
             return response()->json([
                 'message' => 'Validation failed',
@@ -30,9 +27,7 @@ class AuthenticationController
         if($user){
                 
             if(Hash::check($request->password,$user->password)){
-                    
                 $token=$user->createToken('auth-token')->plainTextToken;
-
                 return response()->json([
                     'message'=>'Login successful',
                     'token'=>$token,
@@ -42,8 +37,13 @@ class AuthenticationController
                 return response()->json(    [
                     'message' => 'Incorrect credentials'
                 ], 400);
-                
             }
         }
+    }
+    public function logout(Request $request){
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            'message' => 'user successfully logged out',
+        ], 200);
     }
 }
