@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('student_bag_items', function (Blueprint $table) {
             $table->id();
             $table->string('Department'); 
+            $table->string('Course'); 
+            $table->string('Gender'); 
             $table->string('Type');
             $table->string('Body');
             $table->string('Size');
             $table->string('Status');
             $table->string('code')->nullable();
+            $table->string('claiming_schedule')->nullable(); 
             $table->unsignedBigInteger('stubag_id');
             $table->foreign('stubag_id')->references('id')->on('student_bags')->onDelete('cascade');
             $table->timestamp('dateReceived')->nullable();

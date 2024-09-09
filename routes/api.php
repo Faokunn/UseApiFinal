@@ -42,6 +42,7 @@ Route::apiResource('bookcollections', BookCollectionController::class);
 
 //Customized Route
 Route::get('/studentbagitems/{id}/{status}', [StudentBagItemController::class, 'show']);
+Route::get('/bookcollections/{id}/{status}', [BookCollectionController::class, 'show']);
 
 //Item
 Route::apiResource('item-books', ItemBookController::class);

@@ -11,13 +11,18 @@ class BookCollection extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'status',
-        'stubag_id'
+        'BookName',      
+        'SubjectCode',   
+        'SubjectDesc',    
+        'code',
+        'status',          
+        'claiming_schedule',
+        'stubag_id',
+        'dateReceived',  
     ];
-    public function studentBag(){
-        return $this->belongsTo(StudentBag::class,'stubag_id');
-    }
-    public function books(){
-        return $this->hasMany(Books::class, 'bookCollection_id');
+
+    public function studentBag()
+    {
+        return $this->belongsTo(StudentBag::class, 'stubag_id');
     }
 }

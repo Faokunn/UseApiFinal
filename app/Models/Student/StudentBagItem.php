@@ -12,12 +12,15 @@ class StudentBagItem extends Model
 
     protected $fillable = [
         'Department',
+        'Course',
+        'Gender',
         'Type',
         'Body',
         'Size',
         'Status',
         'code',
         'stubag_id',
+        'claiming_schedule',
         'dateReceived'
     ];
 

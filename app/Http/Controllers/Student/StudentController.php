@@ -44,7 +44,7 @@ class StudentController extends Controller
             'status' => 'INCOMPLETE'
         ];
 
-        $studentBag->bookCollection()->create($bookCollectionData);
+
     
         return response()->json([
             'message' => 'Student Added',

@@ -14,9 +14,15 @@ return new class extends Migration
     {
         Schema::create('book_collections', function (Blueprint $table) {
             $table->id();
-            $table->string('status');
-            $table->bigInteger('stubag_id')->unsigned();
-            $table->foreign('stubag_id')->references('id')->on('student_bags');
+            $table->string('BookName');
+            $table->string('SubjectCode');
+            $table->string('SubjectDesc');
+            $table->string('code')->nullable();
+            $table->string('Status');
+            $table->string('claiming_schedule')->nullable(); 
+            $table->unsignedBigInteger('stubag_id');
+            $table->foreign('stubag_id')->references('id')->on('student_bags')->onDelete('cascade');
+            $table->timestamp('dateReceived')->nullable();
             $table->timestamps();
         });
     }

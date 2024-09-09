@@ -18,11 +18,14 @@ class StudentBagItemController extends Controller
     {
         $validatedData = $request->validate([
             'Department' => 'nullable|string|max:255',
+            'Course' => 'nullable|string|max:255',
+            'Gender' => 'nullable|string|max:50',
             'Type' => 'required|string|max:255',
             'Body' => 'required|string|max:255',
             'Size' => 'required|string|max:255',
             'Status' => 'required|string|max:255',
             'code' => 'nullable|string|max:5',
+            'claiming_schedule' => 'nullable|string|max:255',
             'stubag_id' => 'required|integer|exists:student_bags,id',
             'dateReceived' => 'nullable|date'
         ]);
@@ -63,11 +66,14 @@ class StudentBagItemController extends Controller
 
         $validatedData = $request->validate([
             'Department' => 'nullable|string|max:255',
+            'Course' => 'nullable|string|max:255',
+            'Gender' => 'nullable|string|max:50', 
             'Type' => 'nullable|string|max:255',
             'Body' => 'nullable|string|max:255',
             'Size' => 'nullable|string|max:255',
             'Status' => 'nullable|string|max:255',
             'code' => 'nullable|string|max:5',
+            'claiming_schedule' => 'nullable|string|max:255', 
             'stubag_id' => 'nullable|integer|exists:student_bags,id',
             'dateReceived' => 'nullable|date'
         ]);

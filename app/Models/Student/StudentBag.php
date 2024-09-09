@@ -17,7 +17,7 @@ class StudentBag extends Model
         return $this->hasMany(StudentBagItem::class,'stubag_id');
     }
     public function bookCollection(){
-        return $this->hasOne(BookCollection::class,'stubag_id');
+        return $this->hasMany(BookCollection::class,'stubag_id');
     }
     public function student()
     {
