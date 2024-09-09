@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Admin\Department;
 
 class DepartmentController extends Controller
 {
     public function index(){
         $data = Department::all();
-        return response()->json(['Departments' => $data]);
+        return response()->json($data);
     }
     public function create(Request $request){
         $request->validate([

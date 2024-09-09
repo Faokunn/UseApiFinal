@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Admin\Announcement;
 
 class AnnouncementController extends Controller
 {
     public function index(){
-        $announcements = Announcement::all();
-        return response()->json($announcements);
+        $data = Announcement::all();
+        return response()->json($data);
     }
     public function create(Request $request){
         $request->validate([

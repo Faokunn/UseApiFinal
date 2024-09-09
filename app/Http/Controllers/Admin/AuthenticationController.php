@@ -11,23 +11,27 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthenticationController
 {
-    public function login(Request $request) {
+     //LOGIN FUNCTION
+     public function login(Request $request) {
         $validator = Validator::make($request->all(), [
-            'admin_id' => 'required|max:14',
-            'password' => 'required|min:5|max:20',
+            'adminID' => 'required|unique|max:14',
+            'password' => 'required|min:3|max:20',
         ]);
+
         if($validator->fails()) {
             return response()->json([
                 'message' => 'Validation failed',
                 'errors' => $validator->errors()
             ], 422);
         }
-        $user = Admin::where('admin_id', $request->admin_id)->first();
+        $user = Admin::where('adminID', $request->adminID)->first();
 
         if($user){
                 
             if(Hash::check($request->password,$user->password)){
-                $token=$user->createToken('auth-token')->plainTextToken;
+                    
+                $token = $user->createToken('token-name')->plainTextToken;
+
                 return response()->json([
                     'message'=>'Login successful',
                     'token'=>$token,
@@ -37,6 +41,7 @@ class AuthenticationController
                 return response()->json(    [
                     'message' => 'Incorrect credentials'
                 ], 400);
+                
             }
         }
     }
