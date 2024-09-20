@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('item_books', function (Blueprint $table) {
             $table->id();
+            $table->string('Department'); 
             $table->string('BookName');
-            $table->string('Course');
             $table->string('SubjectCode');
-            $table->string('SubDescription');
+            $table->string('SubjectDesc');
             $table->string('Status');
             $table->integer('Stock');
             $table->timestamps();
