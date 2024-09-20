@@ -10,9 +10,9 @@ class AnnouncementController extends Controller
 {
     public function index(){
         $data = Announcement::all();
-        return response()->json($data);
+        return response()->json(['announcement'=>$data]);
     }
-    public function create(Request $request){
+    public function store(Request $request){
         $request->validate([
             'department' => 'required|max:4|string',
             'body' => 'required|max:500|string',
@@ -39,5 +39,14 @@ class AnnouncementController extends Controller
         $announcement = Announcement::find($id);
         $announcement -> delete();
         return response()->json(['message' => "Deleted Succesfully"]);
+    }
+
+    public function show($department){
+        $announcements = Announcement::where('department', $department)->get();
+        $announcements->map(function($announcement) {
+            $announcement->created_at = $announcement->created_at->toDateString();
+            return $announcement;
+        });
+        return response()->json(['announcement' => $announcements]);
     }
 }

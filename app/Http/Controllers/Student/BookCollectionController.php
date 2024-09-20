@@ -13,6 +13,17 @@ class BookCollectionController extends Controller
         $bookCollections = BookCollection::all();
         return response()->json(['bookCollections' => $bookCollections]);
     }
+
+    public function generateCode(){
+        $code = mt_rand(00000, 99999);
+        $existingCode = BookCollection::where('code', $code)->first();
+
+        if ($existingCode) {
+            return $this->generateCode();
+        }
+
+        return $code;
+    }
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -26,6 +37,16 @@ class BookCollectionController extends Controller
             'dateReceived' => 'nullable|date',
         ]);
 
+        if (empty($validatedData['code'])) {
+            $validatedData['code'] = $this->generateCode();
+        }
+
+        $existingBook = BookCollection::where('BookName', $validatedData['BookName'])->first();
+
+        if ($existingBook) {
+            return response()->json(['message' => 'Book already exists'], 409);
+        }
+
         $bookCollection = BookCollection::create($validatedData);
 
         return response()->json(['message' => 'Book Collection created successfully', 'bookCollection' => $bookCollection], 201);
@@ -36,12 +57,6 @@ class BookCollectionController extends Controller
         $bookCollections = BookCollection::where('stubag_id', $stubag_id)
             ->where('Status', $status)
             ->get();
-    
-        if ($bookCollections->isEmpty()) {
-            // Return a 404 response if no book collections are found
-            return response()->json(['message' => 'No Book Collections found for the specified criteria'], 404);
-        }
-    
         // Return the book collections as JSON
         return response()->json(['bookCollections' => $bookCollections]);
     }
@@ -83,5 +98,18 @@ class BookCollectionController extends Controller
         $bookCollection->delete();
 
         return response()->json(['message' => 'Book Collection deleted successfully'], 200);
+    }
+
+    public function changeStatus($id, $status){
+        $bookCollection = BookCollection::find($id);
+
+        if (!$bookCollection) {
+            return response()->json(['message' => 'Book Collection not found'], 404);
+        }
+
+        $bookCollection->status = $status;
+        $bookCollection->save();
+
+        return response()->json(['message' => 'Status updated successfully', 'bookCollection' => $bookCollection], 200);
     }
 }

@@ -14,6 +14,17 @@ class StudentBagItemController extends Controller
         return response()->json(['items' => $items]);
     }
 
+    public function generateCode(){
+        $code = mt_rand(00000, 99999);
+        $existingCode = StudentBagItem::where('code', $code)->first();
+
+        if ($existingCode) {
+            return $this->generateCode();
+        }
+
+        return $code;
+    }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -30,6 +41,10 @@ class StudentBagItemController extends Controller
             'dateReceived' => 'nullable|date'
         ]);
 
+        if (empty($validatedData['code'])) {
+            $validatedData['code'] = $this->generateCode();
+        }
+        
         $existingItem = StudentBagItem::where('Type', $validatedData['Type'])
             ->where('Body', $validatedData['Body'])
             ->first();
@@ -48,11 +63,6 @@ class StudentBagItemController extends Controller
         $items = StudentBagItem::where('stubag_id', $stubag_id)
             ->where('Status', $status)
             ->get();
-
-        if ($items->isEmpty()) {
-            return response()->json(['message' => 'No Student Bag Items found for the specified criteria'], 404);
-        }
-
         return response()->json(['items' => $items]);
     }
 
@@ -94,5 +104,18 @@ class StudentBagItemController extends Controller
         $item->delete();
 
         return response()->json(['message' => 'Student Bag Item deleted successfully'], 200);
+    }
+
+    public function changeStatus($id, $status){
+        $item = StudentBagItem::find($id);
+
+        if(!$item){
+            return response()->json(['Student Bag item not found'], status: 400);
+        }
+
+        $item->Status = $status;
+        $item->save();
+
+        return response()->json(['message' => 'Status changed successfully'], status: 200);
     }
 }

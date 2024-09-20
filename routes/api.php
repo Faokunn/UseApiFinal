@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Student\BooksController;
 use App\Http\Controllers\Student\NotificationController;
 use App\Http\Controllers\Student\StudentBagItemController;
 use App\Http\Controllers\Student\StudentBagController;
@@ -38,7 +37,6 @@ Route::post('/auth/student/logout', [StudentController::class, 'logout'])->middl
 
 //Student
 Route::apiResource('students', StudentController::class);
-Route::apiResource('books', BooksController::class);
 Route::apiResource('notifications', NotificationController::class);
 Route::apiResource('profiles', ProfileController::class);
 Route::apiResource('mails', MailsController::class);
@@ -48,7 +46,9 @@ Route::apiResource('bookcollections', BookCollectionController::class);
 
 //Customized Route
 Route::get('/studentbagitems/{id}/{status}', [StudentBagItemController::class, 'show']);
+Route::put('/studentbagitems/{id}/{status}', [StudentBagItemController::class, 'changeStatus']);
 Route::get('/bookcollections/{id}/{status}', [BookCollectionController::class, 'show']);
+Route::put('/bookcollections/{id}/{status}', [BookCollectionController::class, 'changeStatus']);
 
 //Item
 Route::apiResource('item-books', ItemBookController::class);
@@ -59,27 +59,12 @@ Route::apiResource('item-rsos', ItemrsoController::class);
 //Admin
 Route::apiResource('admins', AdminController::class);
 
-
-
-
-
-
 // BY LANCE
 // Announcements
-Route::get('/announcement/get', [AnnouncementController::class, 'index']);
-Route::post('/announcement/create', [AnnouncementController::class, 'create']);
-Route::put('/announcement/update/{id}', [AnnouncementController::class, 'update']);
-Route::delete('/announcement/delete/{id}', [AnnouncementController::class, 'destroy']);
+Route::apiResource('announcements', AnnouncementController::class);
 
 // Department
-Route::get('/department/get', [DepartmentController::class, 'index']);
-Route::post('/department/create', [DepartmentController::class, 'create']);
-Route::put('/department/update/{id}', [DepartmentController::class, 'update']);
-Route::delete('/department/delete/{id}', [DepartmentController::class, 'destroy']);
+Route::apiResource('departments', DepartmentController::class);
 
 // Course
-Route::get('/course/get', [CourseController::class, 'index']);
-Route::get('/course/show/{id}', [CourseController::class, 'show']);
-Route::post('/course/create', [CourseController::class, 'create']);
-Route::put('/course/update/{id}', [CourseController::class, 'update']);
-Route::delete('/course/delete/{id}', [CourseController::class, 'destroy']);
+Route::apiResource('courses', CourseController::class);
