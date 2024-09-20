@@ -35,13 +35,16 @@ class BookCollectionController extends Controller
             'claiming_schedule' => 'nullable|string|max:255',
             'stubag_id' => 'required|integer|exists:student_bags,id',
             'dateReceived' => 'nullable|date',
+            'reservationNumber' => 'nullable|integer|exists',
+            'Department' => 'nullable|string|max:255',
         ]);
 
         if (empty($validatedData['code'])) {
             $validatedData['code'] = $this->generateCode();
         }
 
-        $existingBook = BookCollection::where('BookName', $validatedData['BookName'])->first();
+        $existingBook = BookCollection::where('BookName', $validatedData['BookName'])
+        ->where('stubag_id', $validatedData['stubag_id'])->first();
 
         if ($existingBook) {
             return response()->json(['message' => 'Book already exists'], 409);
@@ -60,12 +63,29 @@ class BookCollectionController extends Controller
         // Return the book collections as JSON
         return response()->json(['bookCollections' => $bookCollections]);
     }
-    
 
+    public function codeShow($code)
+    {
+        $bookCollections = BookCollection::where('code', $code)->first();
+
+        if(!$bookCollections){
+            return response()->json(['message' => 'Book Collection not found'], 404);
+        }
+
+        if($bookCollections->Status != 'claim'){
+            return response()->json(['message' => 'Book is not ready for claiming'], 409);
+        }
+        else{
+            return response()->json(['bookCollections' => $bookCollections], 200);
+        }
+        
+    }
+    
 
     public function update(Request $request, $id)
     {
         $bookCollection = BookCollection::find($id);
+
 
         if (!$bookCollection) {
             return response()->json(['message' => 'Book Collection not found'], 404);
@@ -80,6 +100,8 @@ class BookCollectionController extends Controller
             'claiming_schedule' => 'nullable|string|max:255',
             'stubag_id' => 'nullable|integer|exists:student_bags,id',
             'dateReceived' => 'nullable|date',
+            'reservationNumber' => 'nullable|integer|exists',
+            'Department' => 'nullable|string|max:255',
         ]);
 
         $bookCollection->update($validatedData);
@@ -102,14 +124,53 @@ class BookCollectionController extends Controller
 
     public function changeStatus($id, $status){
         $bookCollection = BookCollection::find($id);
+        $scheduleA = ["Monday", "Tuesday", "Wednesday",];
+        $scheduleB = ["Thursday", "Friday", "Saturday"];
 
-        if (!$bookCollection) {
-            return response()->json(['message' => 'Book Collection not found'], 404);
+        $shiftA = ["CMA"];
+        $shiftB = ["CITE"];
+
+        if(!$bookCollection){
+            return response()->json(['Book not found'], status: 400);
         }
 
-        $bookCollection->status = $status;
+        if($status == 'reserved'){
+            $highestReservation = BookCollection::
+            where('BookName', $bookCollection->BookName)
+            ->max('reservationNumber');
+
+            $bookCollection->status = 'reserved';
+            $bookCollection->reservationNumber = ++$highestReservation;
+            $bookCollection->save();
+        }
+
+        if($status == 'claim'){
+            if(in_array($bookCollection->Department, $shiftA)){
+                $bookCollection->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
+            }
+            elseif(in_array($bookCollection->Department, $shiftB)){
+                $bookCollection->claiming_schedule = "$scheduleB[0] to $scheduleB[2]";
+            }
+            else{
+                return response()->json(['message' => 'Department not found in either shift'], status: 400);
+            }
+            $bookCollection->status = $status;
+            $bookCollection->reservationNumber = null;
+        }
+
+        if($status == 'complete'){
+            $bookCollection->dateReceived = now();
+            $bookCollection->status = $status;
+            $bookCollection->claiming_schedule = null;
+            $bookCollection->code = null;
+        }
+        if($status == 'request'){
+            $bookCollection->status = $status;
+            $bookCollection->reservationNumber = null;
+            $bookCollection->claiming_schedule = null;
+        }
         $bookCollection->save();
 
-        return response()->json(['message' => 'Status updated successfully', 'bookCollection' => $bookCollection], 200);
+        return response()->json(['message' => 'Status changed successfully'], status: 200);
     }
 }

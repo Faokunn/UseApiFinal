@@ -47,8 +47,11 @@ Route::apiResource('bookcollections', BookCollectionController::class);
 //Customized Route
 Route::get('/studentbagitems/{id}/{status}', [StudentBagItemController::class, 'show']);
 Route::put('/studentbagitems/{id}/{status}', [StudentBagItemController::class, 'changeStatus']);
+Route::get('/itempickup/{code}', [StudentBagItemController::class, 'codeShow']);
+
 Route::get('/bookcollections/{id}/{status}', [BookCollectionController::class, 'show']);
 Route::put('/bookcollections/{id}/{status}', [BookCollectionController::class, 'changeStatus']);
+Route::get('/bookpickup/{code}', [BookCollectionController::class, 'codeShow']);
 
 //Item
 Route::apiResource('item-books', ItemBookController::class);

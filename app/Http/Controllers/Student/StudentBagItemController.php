@@ -38,7 +38,8 @@ class StudentBagItemController extends Controller
             'code' => 'nullable|string|max:5',
             'claiming_schedule' => 'nullable|string|max:255',
             'stubag_id' => 'required|integer|exists:student_bags,id',
-            'dateReceived' => 'nullable|date'
+            'dateReceived' => 'nullable|date',
+            'reservationNumber' => 'nullable|integer|exists',
         ]);
 
         if (empty($validatedData['code'])) {
@@ -47,6 +48,7 @@ class StudentBagItemController extends Controller
         
         $existingItem = StudentBagItem::where('Type', $validatedData['Type'])
             ->where('Body', $validatedData['Body'])
+            ->where('stubag_id', $validatedData['stubag_id'])
             ->first();
 
         if ($existingItem) {
@@ -64,6 +66,22 @@ class StudentBagItemController extends Controller
             ->where('Status', $status)
             ->get();
         return response()->json(['items' => $items]);
+    }
+
+    public function codeShow($code)
+    {
+        $item = StudentBagItem::where('code', $code)->first();
+
+        if(!$item){
+            return response()->json(['message' => 'Item not found'], 404);
+        }
+
+        if($item->Status != 'claim'){
+            return response()->json(['message' => 'Item is not ready for claiming'], 409);
+        }
+        else{
+            return response()->json(['items' => $item], 200);
+        }
     }
 
     public function update(Request $request, $id)
@@ -85,7 +103,9 @@ class StudentBagItemController extends Controller
             'code' => 'nullable|string|max:5',
             'claiming_schedule' => 'nullable|string|max:255', 
             'stubag_id' => 'nullable|integer|exists:student_bags,id',
-            'dateReceived' => 'nullable|date'
+            'dateReceived' => 'nullable|date',
+            'reservationNumber' => 'nullable|integer|exists',
+
         ]);
 
         $item->update($validatedData);
@@ -108,12 +128,58 @@ class StudentBagItemController extends Controller
 
     public function changeStatus($id, $status){
         $item = StudentBagItem::find($id);
+        $scheduleA = ["Monday", "Tuesday", "Wednesday",];
+        $scheduleB = ["Thursday", "Friday", "Saturday"];
+
+        $shiftA = ["CMA"];
+        $shiftB = ["CITE"];
 
         if(!$item){
             return response()->json(['Student Bag item not found'], status: 400);
         }
 
-        $item->Status = $status;
+        if($status == 'reserved'){
+            $items = StudentBagItem::find($id)->first();
+            $highestReservation = StudentBagItem::
+            where('Type', $item->Type)
+            ->where('Size', $item->Size)
+            ->where('Course', $item->Course)
+            ->where('Body', $item->Body)
+            ->where('Gender', $item->Gender)
+            ->max('reservationNumber');
+
+            $item->status = 'reserved';
+            $item->reservationNumber = ++$highestReservation;
+            $item->save();
+        }
+        
+
+        if($status == 'claim'){
+            if(in_array($item->Department, $shiftA)){
+                $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
+            }
+            elseif(in_array($item->Department, $shiftB)){
+                $item->claiming_schedule = "$scheduleB[0] to $scheduleB[2]";
+            }
+            else{
+                return response()->json(['message' => 'Department not found in either shift'], status: 400);
+            }
+            $item->status = $status;
+            $item->reservationNumber = null;
+        }
+
+        if($status == 'complete'){
+            $item->dateReceived = now();
+            $item->status = $status;
+            $item->claiming_schedule = null;
+            $item->code = null;
+        }
+        if($status == 'request'){
+            $item->status = $status;
+            $item->claiming_schedule = null;
+            $item->code = null;
+        }
+        
         $item->save();
 
         return response()->json(['message' => 'Status changed successfully'], status: 200);
