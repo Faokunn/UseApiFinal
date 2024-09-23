@@ -53,6 +53,8 @@ Route::get('/bookcollections/{id}/{status}', [BookCollectionController::class, '
 Route::put('/bookcollections/{id}/{status}', [BookCollectionController::class, 'changeStatus']);
 Route::get('/bookpickup/{code}', [BookCollectionController::class, 'codeShow']);
 
+Route::put('/notificationdone/{id}', [MailsController::class,'notificationDone']);
+
 //Item
 Route::apiResource('item-books', ItemBookController::class);
 Route::apiResource('item-lower-uniforms', ItemLowerUniformController::class);
