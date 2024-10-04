@@ -134,17 +134,17 @@ class BookCollectionController extends Controller
             return response()->json(['Book not found'], status: 400);
         }
 
-        if($status == 'reserved'){
+        if($status == 'Reserved'){
             $highestReservation = BookCollection::
             where('BookName', $bookCollection->BookName)
             ->max('reservationNumber');
 
-            $bookCollection->status = 'reserved';
+            $bookCollection->status = 'Reserved';
             $bookCollection->reservationNumber = ++$highestReservation;
             $bookCollection->save();
         }
 
-        if($status == 'claim'){
+        if($status == 'Claim'){
             if(in_array($bookCollection->Department, $shiftA)){
                 $bookCollection->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
             }
@@ -158,13 +158,13 @@ class BookCollectionController extends Controller
             $bookCollection->reservationNumber = null;
         }
 
-        if($status == 'complete'){
+        if($status == 'Complete'){
             $bookCollection->dateReceived = now();
             $bookCollection->status = $status;
             $bookCollection->claiming_schedule = null;
             $bookCollection->code = null;
         }
-        if($status == 'request'){
+        if($status == 'Request'){
             $bookCollection->status = $status;
             $bookCollection->reservationNumber = null;
             $bookCollection->claiming_schedule = null;

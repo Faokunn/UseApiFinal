@@ -138,7 +138,7 @@ class StudentBagItemController extends Controller
             return response()->json(['Student Bag item not found'], status: 400);
         }
 
-        if($status == 'reserved'){
+        if($status == 'Reserved'){
             $items = StudentBagItem::find($id)->first();
             $highestReservation = StudentBagItem::
             where('Type', $item->Type)
@@ -148,13 +148,13 @@ class StudentBagItemController extends Controller
             ->where('Gender', $item->Gender)
             ->max('reservationNumber');
 
-            $item->status = 'reserved';
+            $item->status = 'Reserved';
             $item->reservationNumber = ++$highestReservation;
             $item->save();
         }
         
 
-        if($status == 'claim'){
+        if($status == 'Claim'){
             if(in_array($item->Department, $shiftA)){
                 $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
             }
@@ -168,13 +168,13 @@ class StudentBagItemController extends Controller
             $item->reservationNumber = null;
         }
 
-        if($status == 'complete'){
+        if($status == 'Complete'){
             $item->dateReceived = now();
             $item->status = $status;
             $item->claiming_schedule = null;
             $item->code = null;
         }
-        if($status == 'request'){
+        if($status == 'Request'){
             $item->status = $status;
             $item->claiming_schedule = null;
             $item->code = null;
