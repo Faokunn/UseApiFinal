@@ -17,10 +17,6 @@ return new class extends Migration
             $table->string('LastName');
             $table->string('Course');
             $table->string('Department');
-            $table->boolean('hasUUniform'); 
-            $table->boolean('hasLUniform'); 
-            $table->boolean('hasRSO'); 
-            $table->boolean('hasBooks');
             $table->integer('Year');
             $table->string('Status');
             $table->string('stu_id');

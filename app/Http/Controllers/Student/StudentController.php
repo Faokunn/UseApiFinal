@@ -25,15 +25,18 @@ class StudentController extends Controller
             return $this->generateCode();
         }
 
-        return $code;
+        return $id;
     }
 
     public function store(Request $request)
     {   
         $id = $this->generateCode();
+
+        $password = $request->input('profile.LastName');
+
         $student = Student::create([
             'studentId' => $id,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($password)
         ]);
     
         $student->profile()->create($request->input('profile'));
