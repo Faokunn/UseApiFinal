@@ -184,4 +184,18 @@ class StudentBagItemController extends Controller
 
         return response()->json(['message' => 'Status changed successfully'], status: 200);
     }
+    public function reservedItemFirst($count){
+        $items = StudentBagItem::orderBy('reservationNumber','asc')->take($count)->get();
+
+        foreach($items as $item){
+            $item->status = 'Claim';
+            $item->save();
+        }
+        return response()->json(['message' => 'Reserved Items Successfully Prioritized'], status: 200);
+        
+    }
+    public function showAllItems($stubag_id){
+        $items = StudentBagItem::where('stubag_id', $stubag_id)->get();
+        return response()->json(['items' => $items]);
+    }
 }

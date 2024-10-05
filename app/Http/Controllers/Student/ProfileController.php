@@ -17,7 +17,7 @@ class ProfileController extends Controller
         if (!$profile) {
             return response()->json(['error' => 'Proifle not found'], 404);
         }
-        return response()->json(['profile' => $profile]);
+        return response()->json(['profile' => $profile],200);
     }
 
     public function update(Request $request, $id){

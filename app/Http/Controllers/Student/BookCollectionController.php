@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Student\BookCollection;
 
 class BookCollectionController extends Controller
-{
+{   
     public function index()
     {
         $bookCollections = BookCollection::all();
@@ -172,5 +172,18 @@ class BookCollectionController extends Controller
         $bookCollection->save();
 
         return response()->json(['message' => 'Status changed successfully'], status: 200);
+    }
+    public function reservedBookFirst($count){
+        $bookCollection = BookCollection::orderBy('reservationNumber', 'asc')->take($count)->get();
+
+        foreach($bookCollection as $books){
+            $books->status = 'Claim';
+            $books->save();
+        }
+        return response()->json(['message' => 'Reserved Books Successfully Prioritized'], status: 200);
+    }
+    public function showAllBooks($stubag_id){
+        $bookCollections = BookCollection::where('stubag_id', $stubag_id)->get();
+        return response()->json(['bookCollections' => $bookCollections]);
     }
 }
