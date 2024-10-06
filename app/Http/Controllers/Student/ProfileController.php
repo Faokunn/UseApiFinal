@@ -26,7 +26,7 @@ class ProfileController extends Controller
             'LastName' => 'string|max:255',
             'Course' => 'string|max:255',
             'Department' => 'string|max:255',
-            'Year' => 'string|max:4',
+            'Year' => 'int|max:4',
             'Status' => 'string|max:255',
             'stu_id' => 'string|exists:students,studentId'
         ]);

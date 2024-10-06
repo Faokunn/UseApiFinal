@@ -45,6 +45,8 @@ Route::apiResource('studentbagitems', StudentBagItemController::class);
 Route::apiResource('bookcollections', BookCollectionController::class);
 
 //Customized Route
+Route::put('/updateprofile/{id}', [ProfileController::class, 'update']);
+
 Route::get('/studentbagitems/{id}/{status}', [StudentBagItemController::class, 'show']);
 Route::put('/studentbagitems/{id}/{status}', [StudentBagItemController::class, 'changeStatus']);
 Route::put('/reserveditems/{count}/{course}/{gender}/{type}/{body}/{size}', [StudentBagItemController::class, 'reservedItemFirst']);
