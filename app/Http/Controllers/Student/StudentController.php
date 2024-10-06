@@ -104,7 +104,7 @@ class StudentController extends Controller
      public function login(Request $request) {
         $validator = Validator::make($request->all(), [
             'studentId' => 'required|max:14',
-            'password' => 'required|min:6|max:20',
+            'password' => 'required|min:0|max:20',
         ]);
     
         if ($validator->fails()) {

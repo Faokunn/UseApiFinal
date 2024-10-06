@@ -184,16 +184,43 @@ class StudentBagItemController extends Controller
 
         return response()->json(['message' => 'Status changed successfully'], status: 200);
     }
-    public function reservedItemFirst($count){
-        $items = StudentBagItem::orderBy('reservationNumber','asc')->take($count)->get();
+    public function reservedItemFirst($count, $course, $gender, $type, $body, $size){
+        $scheduleA = ["Monday", "Tuesday", "Wednesday"];
+        $scheduleB = ["Thursday", "Friday", "Saturday"];
+    
+        $shiftA = ["CMA"];
+        $shiftB = ["CITE"];
+        $items = StudentBagItem::where('Course', $course) 
+        ->where('Gender', $gender)
+        ->where('Type', $type)
+        ->where('Body', $body)
+        ->where('Size', $size)       
+        ->whereNotNull('reservationNumber')
+        ->orderBy('reservationNumber', 'asc')
+        ->take($count)
+        ->get();
 
         foreach($items as $item){
+            if (in_array($item->Department, $shiftA)) {
+                $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
+            } elseif (in_array($item->Department, $shiftB)) {
+                $item->claiming_schedule = "$scheduleB[0] to $scheduleB[2]";
+            } else {
+                return response()->json(['message' => 'Department not found in either shift'], 400);
+            }
+    
             $item->status = 'Claim';
-            $item->save();
+            $item->reservationNumber = null;
+    
+            if (!$item->save()) {
+                return response()->json(['message' => 'Failed to update record for book ID: ' . $item->id], 500);
+            } else {
+            }
         }
         return response()->json(['message' => 'Reserved Items Successfully Prioritized'], status: 200);
         
     }
+
     public function showAllItems($stubag_id){
         $items = StudentBagItem::where('stubag_id', $stubag_id)->get();
         return response()->json(['items' => $items]);

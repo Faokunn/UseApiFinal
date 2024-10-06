@@ -72,7 +72,7 @@ class BookCollectionController extends Controller
             return response()->json(['message' => 'Book Collection not found'], 404);
         }
 
-        if($bookCollections->Status != 'claim'){
+        if($bookCollections->Status != 'Claim'){
             return response()->json(['message' => 'Book is not ready for claiming'], 409);
         }
         else{
@@ -173,15 +173,39 @@ class BookCollectionController extends Controller
 
         return response()->json(['message' => 'Status changed successfully'], status: 200);
     }
-    public function reservedBookFirst($count){
-        $bookCollection = BookCollection::orderBy('reservationNumber', 'asc')->take($count)->get();
+    public function reservedBookFirst($count, $identifier) {
+        $scheduleA = ["Monday", "Tuesday", "Wednesday"];
+        $scheduleB = ["Thursday", "Friday", "Saturday"];
+    
+        $shiftA = ["CMA"];
+        $shiftB = ["CITE"];
+    
+        $bookCollection = BookCollection::where('BookName', $identifier)
+            ->whereNotNull('reservationNumber')
+            ->orderBy('reservationNumber', 'asc')
+            ->take($count)
+            ->get();
 
-        foreach($bookCollection as $books){
+        foreach ($bookCollection as $books) {
+            if (in_array($books->Department, $shiftA)) {
+                $books->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
+            } elseif (in_array($books->Department, $shiftB)) {
+                $books->claiming_schedule = "$scheduleB[0] to $scheduleB[2]";
+            } else {
+                return response()->json(['message' => 'Department not found in either shift'], 400);
+            }
+    
             $books->status = 'Claim';
-            $books->save();
+            $books->reservationNumber = null;
+    
+            if (!$books->save()) {
+                return response()->json(['message' => 'Failed to update record for book ID: ' . $books->id], 500);
+            } else {
+            }
         }
-        return response()->json(['message' => 'Reserved Books Successfully Prioritized'], status: 200);
+        return response()->json(['message' => 'Reserved Books Successfully Prioritized'], 200);
     }
+    
     public function showAllBooks($stubag_id){
         $bookCollections = BookCollection::where('stubag_id', $stubag_id)->get();
         return response()->json(['bookCollections' => $bookCollections]);
