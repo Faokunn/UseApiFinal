@@ -13,6 +13,8 @@ class Mails extends Model
     protected $fillable = [
         'description',
         'time',
+        'isDone',
+        'redirectTo',
         'notificationId'
     ];
 

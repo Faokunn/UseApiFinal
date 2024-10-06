@@ -10,6 +10,10 @@ class Itemrso extends Model
     use HasFactory;
     protected $fillable = [
         'Department',
+        'Course',
+        'Gender',
+        'Type',
+        'Body',
         'Size',
         'Stock',
     ];

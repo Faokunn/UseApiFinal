@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('itemrsos', function (Blueprint $table) {
             $table->id();
             $table->string('Department');
+            $table->string('Course'); 
+            $table->string('Gender'); 
+            $table->string('Type');
+            $table->string('Body');
             $table->string('Size');
             $table->integer('Stock');
             $table->timestamps();

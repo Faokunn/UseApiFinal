@@ -12,12 +12,12 @@ class ProfileController extends Controller
         return response() -> json(['profiles' => $profile]);
     }
 
-     public function show(Request $request, $stu_id){
+     public function show($stu_id){
         $profile = Profile::all()->find($stu_id);
         if (!$profile) {
             return response()->json(['error' => 'Proifle not found'], 404);
         }
-        return response()->json(['profile' => $profile]);
+        return response()->json(['profile' => $profile],200);
     }
 
     public function update(Request $request, $id){
@@ -26,10 +26,6 @@ class ProfileController extends Controller
             'LastName' => 'string|max:255',
             'Course' => 'string|max:255',
             'Department' => 'string|max:255',
-            'hasUUniform' => 'boolean',
-            'hasLUniform' => 'boolean',
-            'hasRSO' => 'boolean',
-            'hasBooks' => 'boolean',
             'Year' => 'string|max:4',
             'Status' => 'string|max:255',
             'stu_id' => 'string|exists:students,studentId'

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('description');
             $table->time('time');
+            $table->boolean('isDone')->default(false);
+            $table->string('redirectTo');
             $table->bigInteger('notificationId')->unsigned();
             $table->foreign('notificationId')->references('id')->on('notifications');
             $table->timestamps();

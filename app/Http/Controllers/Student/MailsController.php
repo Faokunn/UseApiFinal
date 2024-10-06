@@ -17,6 +17,12 @@ class MailsController extends Controller
         return Mails::create($request->all());
      }
 
+    public function notificationDone($id){
+        Mails::where('id', $id)->update(['isDone' => true]);
+        return response() -> json(['message' => 'Email Marked as Done']);    
+
+    }
+
      public function show($notificationId){
         $mails = Mails::where('notificationId', $notificationId)->get();
         

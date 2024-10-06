@@ -20,6 +20,7 @@ class StudentBagItem extends Model
         'Status',
         'code',
         'stubag_id',
+        'reservationNumber',
         'claiming_schedule',
         'dateReceived'
     ];

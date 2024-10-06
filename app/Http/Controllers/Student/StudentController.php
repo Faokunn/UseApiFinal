@@ -16,24 +16,27 @@ class StudentController extends Controller
         $students = Student::with("profile", "studentBag", "notification")->get();
         return response()->json(['students' => $students]);
     }
+    public function generateCode(){
+        $code = mt_rand(0000, 9999);
+        $id = "03-{$code}-2024";
+        $exisitngId = Student::where('studentId', $id)->first();
+        
+        if ($exisitngId) {
+            return $this->generateCode();
+        }
+
+        return $id;
+    }
 
     public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'studentId'=>'required',
-            'password'=>'required|min:8|max:100'
-        ]);
-    
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Validation Failed',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-    
+    {   
+        $id = $this->generateCode();
+
+        $password = $request->input('profile.LastName');
+
         $student = Student::create([
-            'studentId' => $request->studentId,
-            'password' => Hash::make($request->password)
+            'studentId' => $id,
+            'password' => Hash::make($password)
         ]);
     
         $student->profile()->create($request->input('profile'));

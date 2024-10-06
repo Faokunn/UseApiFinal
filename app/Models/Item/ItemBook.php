@@ -9,11 +9,10 @@ class ItemBook extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'BookName',
-        'Course',
-        'SubjectCode',
-        'SubDescription',
-        'Status',
+        'Department',
+        'BookName',      
+        'SubjectCode',   
+        'SubjectDesc',     
         'Stock',
     ];
 }

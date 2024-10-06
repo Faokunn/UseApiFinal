@@ -17,17 +17,17 @@ class NotificationController extends Controller
         if($request->has('mail')){
             $notification->mails()->createMany($request->input('mails'));
         }
-     }
+    }
 
-     public function show($stu_id){
+    public function show($stu_id){
         $notification = Notification::where('stu_id', $stu_id)->first();
         if (!$notification) {
             return response()->json(['error' => 'Notification not found'], 404);
         }
         return response()->json(['notification' => $notification]);;
-     } 
+    } 
 
-     public function destroy($id){
+    public function destroy($id){
 
-     }
+    }
 }

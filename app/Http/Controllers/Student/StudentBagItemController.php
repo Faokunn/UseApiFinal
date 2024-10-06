@@ -14,6 +14,17 @@ class StudentBagItemController extends Controller
         return response()->json(['items' => $items]);
     }
 
+    public function generateCode(){
+        $code = mt_rand(00000, 99999);
+        $existingCode = StudentBagItem::where('code', $code)->first();
+
+        if ($existingCode) {
+            return $this->generateCode();
+        }
+
+        return $code;
+    }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -27,11 +38,17 @@ class StudentBagItemController extends Controller
             'code' => 'nullable|string|max:5',
             'claiming_schedule' => 'nullable|string|max:255',
             'stubag_id' => 'required|integer|exists:student_bags,id',
-            'dateReceived' => 'nullable|date'
+            'dateReceived' => 'nullable|date',
+            'reservationNumber' => 'nullable|integer|exists',
         ]);
 
+        if (empty($validatedData['code'])) {
+            $validatedData['code'] = $this->generateCode();
+        }
+        
         $existingItem = StudentBagItem::where('Type', $validatedData['Type'])
             ->where('Body', $validatedData['Body'])
+            ->where('stubag_id', $validatedData['stubag_id'])
             ->first();
 
         if ($existingItem) {
@@ -48,12 +65,23 @@ class StudentBagItemController extends Controller
         $items = StudentBagItem::where('stubag_id', $stubag_id)
             ->where('Status', $status)
             ->get();
+        return response()->json(['items' => $items]);
+    }
 
-        if ($items->isEmpty()) {
-            return response()->json(['message' => 'No Student Bag Items found for the specified criteria'], 404);
+    public function codeShow($code)
+    {
+        $item = StudentBagItem::where('code', $code)->first();
+
+        if(!$item){
+            return response()->json(['message' => 'Item not found'], 404);
         }
 
-        return response()->json(['items' => $items]);
+        if($item->Status != 'claim'){
+            return response()->json(['message' => 'Item is not ready for claiming'], 409);
+        }
+        else{
+            return response()->json(['items' => $item], 200);
+        }
     }
 
     public function update(Request $request, $id)
@@ -75,7 +103,9 @@ class StudentBagItemController extends Controller
             'code' => 'nullable|string|max:5',
             'claiming_schedule' => 'nullable|string|max:255', 
             'stubag_id' => 'nullable|integer|exists:student_bags,id',
-            'dateReceived' => 'nullable|date'
+            'dateReceived' => 'nullable|date',
+            'reservationNumber' => 'nullable|integer|exists',
+
         ]);
 
         $item->update($validatedData);
@@ -94,5 +124,78 @@ class StudentBagItemController extends Controller
         $item->delete();
 
         return response()->json(['message' => 'Student Bag Item deleted successfully'], 200);
+    }
+
+    public function changeStatus($id, $status){
+        $item = StudentBagItem::find($id);
+        $scheduleA = ["Monday", "Tuesday", "Wednesday",];
+        $scheduleB = ["Thursday", "Friday", "Saturday"];
+
+        $shiftA = ["CMA"];
+        $shiftB = ["CITE"];
+
+        if(!$item){
+            return response()->json(['Student Bag item not found'], status: 400);
+        }
+
+        if($status == 'Reserved'){
+            $items = StudentBagItem::find($id)->first();
+            $highestReservation = StudentBagItem::
+            where('Type', $item->Type)
+            ->where('Size', $item->Size)
+            ->where('Course', $item->Course)
+            ->where('Body', $item->Body)
+            ->where('Gender', $item->Gender)
+            ->max('reservationNumber');
+
+            $item->status = 'Reserved';
+            $item->reservationNumber = ++$highestReservation;
+            $item->save();
+        }
+        
+
+        if($status == 'Claim'){
+            if(in_array($item->Department, $shiftA)){
+                $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
+            }
+            elseif(in_array($item->Department, $shiftB)){
+                $item->claiming_schedule = "$scheduleB[0] to $scheduleB[2]";
+            }
+            else{
+                return response()->json(['message' => 'Department not found in either shift'], status: 400);
+            }
+            $item->status = $status;
+            $item->reservationNumber = null;
+        }
+
+        if($status == 'Complete'){
+            $item->dateReceived = now();
+            $item->status = $status;
+            $item->claiming_schedule = null;
+            $item->code = null;
+        }
+        if($status == 'Request'){
+            $item->status = $status;
+            $item->claiming_schedule = null;
+            $item->code = null;
+        }
+        
+        $item->save();
+
+        return response()->json(['message' => 'Status changed successfully'], status: 200);
+    }
+    public function reservedItemFirst($count){
+        $items = StudentBagItem::orderBy('reservationNumber','asc')->take($count)->get();
+
+        foreach($items as $item){
+            $item->status = 'Claim';
+            $item->save();
+        }
+        return response()->json(['message' => 'Reserved Items Successfully Prioritized'], status: 200);
+        
+    }
+    public function showAllItems($stubag_id){
+        $items = StudentBagItem::where('stubag_id', $stubag_id)->get();
+        return response()->json(['items' => $items]);
     }
 }

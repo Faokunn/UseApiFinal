@@ -12,4 +12,8 @@ class Announcement extends Model
         'department',
         'body',
     ];
+    public function date()
+    {
+        return $this->created_at->toDateString(); 
+    }
 }

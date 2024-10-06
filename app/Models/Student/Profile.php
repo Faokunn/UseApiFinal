@@ -15,10 +15,6 @@ class Profile extends Model
         'LastName',
         'Course',
         'Department',
-        'hasUUniform',
-        'hasLUniform',
-        'hasRSO',
-        'hasBooks',
         'Year',
         'Status',
         'stu_id'

@@ -11,6 +11,7 @@ class BookCollection extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'Department',
         'BookName',      
         'SubjectCode',   
         'SubjectDesc',    
@@ -18,6 +19,7 @@ class BookCollection extends Model
         'status',          
         'claiming_schedule',
         'stubag_id',
+        'reservationNumber',
         'dateReceived',  
     ];
 
