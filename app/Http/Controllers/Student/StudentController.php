@@ -17,7 +17,7 @@ class StudentController extends Controller
         return response()->json(['students' => $students]);
     }
     public function generateCode(){
-        $code = mt_rand(0000, 9999);
+        $code = mt_rand(1000, 9999);
         $id = "03-{$code}-2024";
         $exisitngId = Student::where('studentId', $id)->first();
         

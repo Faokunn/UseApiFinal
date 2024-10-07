@@ -22,10 +22,10 @@ class ProfileController extends Controller
 
     public function update(Request $request, $id){
         $validator = $request->validate([
-            'FirstName' => 'string|max:255',
-            'LastName' => 'string|max:255',
-            'Course' => 'string|max:255',
-            'Department' => 'string|max:255',
+            'FirstName' => 'string|max:20',
+            'LastName' => 'string|max:20',
+            'Course' => 'string|max:4',
+            'Department' => 'string|max:4',
             'Year' => 'int|max:4',
             'Status' => 'string|max:255',
             'stu_id' => 'string|exists:students,studentId'
