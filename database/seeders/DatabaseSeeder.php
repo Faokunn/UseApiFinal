@@ -23,8 +23,6 @@ class DatabaseSeeder extends Seeder
             // BooksSeeder::class,
             // IdLaceSeeder::class,
             // RSOSeeder::class,
-
-            Zest::class,
         ]);
     }
 }

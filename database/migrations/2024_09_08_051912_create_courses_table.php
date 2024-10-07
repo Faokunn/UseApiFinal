@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->bigInteger('department_id')->unsigned();
-            $table->foreign('department_id')->references('id')->on('departments');
+            $table->string('courseName');
+            $table->bigInteger('departmentID')->unsigned();
+            $table->foreign('departmentID')->references('id')->on('departments');
+            $table->string('courseDescription');
             $table->timestamps();
         });
     }

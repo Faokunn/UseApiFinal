@@ -13,66 +13,79 @@ class CourseSeeder extends Seeder
         DB::table("courses")->insert([
             // CITE
             [
-                'name' => 'BSIT',
-                'department_id' => '1',
+                'courseName' => 'BSIT',
+                'departmentID' => '1',
+                'courseDescription' => 'Bachelor of Science information Technology'
             ],
             // CAHS
             [
-                'name' => 'BSN',
-                'department_id' => '2',
-        
+                'courseName' => 'BSN',
+                'departmentID' => '2',
+                'courseDescription' => 'Bachelor of Science in Nursing'
             ],
             [
-                'name' => 'BSMLS',
-                'department_id' => '2',
+                'courseName' => 'BSMLS',
+                'departmentID' => '2',
+                'courseDescription' => 'Bachelor of Science'
             ],
             [
-                'name' => 'BSPHARMA',
-                'department_id' => '2',
+                'courseName' => 'BSPHARMA',
+                'departmentID' => '2',
+                'courseDescription' => 'Bachelor of Science'
             ],
             [
-                'name' => 'BSPSYCH',
-                'department_id' => '2',
+                'courseName' => 'BSPSYCH',
+                'departmentID' => '2',
+                'courseDescription' => 'Bachelor of Science'
             ],
             // CEA
             [
-                'name' => 'BSCE',
-                'department_id' => '3',
+                'courseName' => 'BSCE',
+                'departmentID' => '3',
+                'courseDescription' => 'Bachelor of Science'
             ],
             [
-                'name' => 'BSCPE',
-                'department_id' => '3',
+                'courseName' => 'BSCPE',
+                'departmentID' => '3',
+                'courseDescription' => 'Bachelor of Science'
             ],
             [
-                'name' => 'BSECE',
-                'department_id' => '3',
+                'courseName' => 'BSECE',
+                'departmentID' => '3',
+                'courseDescription' => 'Bachelor of Science'
             ],
             // CMA
             [
-                'name' => 'BSA',
-                'department_id' => '4',
+                'courseName' => 'BSA',
+                'departmentID' => '4',
+                'courseDescription' => 'Bachelor of Science'
             ],
             [
-                'name' => 'BST',
-                'department_id' => '4',
+                'courseName' => 'BST',
+                'departmentID' => '4',
+                'courseDescription' => 'Bachelor of Science'
             ],
             [
-                'name' => 'BSHM',
-                'department_id' => '4',
+                'courseName' => 'BSHM',
+                'departmentID' => '4',
+                'courseDescription' => 'Bachelor of Science'
             ],
             // CELA
             [
-                'name' => 'BSED',
-                'department_id' => '5',
+                'courseName' => 'BSED',
+                'departmentID' => '5',
+                'courseDescription' => 'Bachelor of Science'
             ],
             [
-                'name' => 'BSPOLSCI',
-                'department_id' => '5',
+                'courseName' => 'BSPOLSCI',
+                'departmentID' => '5',
+                'courseDescription' => 'Bachelor of Science'
             ],
             // CCJE
             [
-                'name' => 'BSCRIM',
-                'department_id' => '6',
+                'courseName' => 'BSCRIM',
+                'departmentID' => '6',
+                'courseDescription' => 'Bachelor of Science'
             ],
             ]);
     }

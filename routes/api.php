@@ -79,3 +79,4 @@ Route::apiResource('departments', DepartmentController::class);
 
 // Course
 Route::apiResource('courses', CourseController::class);
+Route::get('/courses/{$departmentID}', [CourseController::class, 'show']);

@@ -10,8 +10,9 @@ class Course extends Model
     use HasFactory;
     use HasFactory;
     protected $fillable = [
-        'name',
-        'department_id',
+        'courseName',
+        'departmentID',
+        'courseDescription',
     ];
 
     // RELATION TO DEPARTMENTS TABLE

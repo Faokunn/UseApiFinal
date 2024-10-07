@@ -12,12 +12,19 @@ class DepartmentController extends Controller
         $data = Department::all();
         return response()->json($data);
     }
-    public function create(Request $request){
+    public function store(Request $request){
         $request->validate([
-            'name' => 'required|max:4|string',
+            'name' => 'required|max:20|string',
             'color' => 'required|max:500|string',
-            'photo' => 'required|max:500|string',
+            'photo' => 'required|mimes:png,jpg,jpeg,webp',
         ]);
+        if ($request->has('photo')) {
+            $file = $request->file('photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = 'uploads/departments/';
+            $file->move($path, $filename);
+        }
         Department::create([
             'name' => $request->name,
             'color' => $request->color,
@@ -25,13 +32,26 @@ class DepartmentController extends Controller
         ]);
         return response()->json(['message' => "Added Succesfully"]);
     }
+    
     public function update(Request $request, $id){
         $request->validate([
             'name' => 'max:10|string',
             'color' => 'max:25|string',
-            'photo' => 'max:500|string',
+            'photo' => 'required|mimes:png,jpg,jpeg,webp',
         ]);
+
+
         $data = Department::findOrFail($id);
+        if ($request->has('photo')) {
+
+            $file = $request->file('photo');
+            $extension = $file->getClientOriginalExtension();
+
+            $filename = time() . '.' . $extension;
+
+            $path = 'uploads/departments';
+            $file->move($path, $filename);
+        }
         $data->update([
             'name' => $request->name,
             'color' => $request->color,

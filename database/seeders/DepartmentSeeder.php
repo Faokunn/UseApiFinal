@@ -14,10 +14,10 @@ class DepartmentSeeder extends Seeder
             [
                 'name' => 'CITE',
                 'color' => 'BLACK',
-                'photo' => '',
+                'photo' => '1728137470.jpg',
             ],
             [
-                'name' => 'CAHS',
+                'name' => 'BONINAM',
                 'color' => 'WHITE/GREEN',
                 'photo' => '',
             ],

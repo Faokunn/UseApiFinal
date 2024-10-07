@@ -14,13 +14,15 @@ class CourseController extends Controller
         return response()->json($data);
     }
     // SHOWS COURSES SPECIFIC TO DEPARTMENT
-    public function show($id){
-        $data = Course::where('department_id', $id)->get();
+    public function show($departmentID){
+        $data = Course::where('departmentID', $departmentID)->get();
         return response()->json($data);
     }
     public function create(Request $request){
         $request->validate([
-            'name' => 'required|max:10|string',
+            'courseName' => 'required|max:10|string',
+            'departmentID' => 'required|max:10|int',
+            'courseDescription' => 'required|max:10|string',
         ]);
         Course::create([
             'name' => $request->name,
@@ -29,11 +31,15 @@ class CourseController extends Controller
     }
     public function update(Request $request, $id){
         $request->validate([
-            'name' => 'max:10|string',
+            'courseName' => 'required|max:10|string',
+            'departmentID' => 'required|max:10|int',
+            'courseDescription' => 'required|max:10|string',
         ]);
         $data = Course::findOrFail($id);
         $data->update([
-            'name' => $request->name,
+            'courseName' => 'required|max:10|string',
+            'departmentID' => 'required|max:10|int',
+            'courseDescription' => 'required|max:10|string',
         ]);
         return response()->json(['message' => "Updated Succesfully"]);
     }
