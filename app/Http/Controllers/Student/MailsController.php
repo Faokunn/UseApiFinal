@@ -24,7 +24,9 @@ class MailsController extends Controller
     }
 
      public function show($notificationId){
-        $mails = Mails::where('notificationId', $notificationId)->get();
+        $mails = Mails::where('notificationId', $notificationId)
+        ->orderBy('id', 'desc')
+        ->get();
         
         if($mails->isEmpty()) {
             return response()->json(['message' => 'No Email found for the specified Notification'], 404);
