@@ -126,7 +126,7 @@ class StudentBagItemController extends Controller
         return response()->json(['message' => 'Student Bag Item deleted successfully'], 200);
     }
 
-    public function changeStatus($id, $status){
+    public function changeStatus($id, $status, $stocks){
         $item = StudentBagItem::find($id);
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
@@ -175,9 +175,33 @@ class StudentBagItemController extends Controller
             $item->code = null;
         }
         if($status == 'Request'){
-            $item->status = $status;
-            $item->claiming_schedule = null;
-            $item->code = null;
+            if($stocks == 0){
+                $items = StudentBagItem::find($id)->first();
+                $highestReservation = StudentBagItem::
+                where('Type', $item->Type)
+                ->where('Size', $item->Size)
+                ->where('Course', $item->Course)
+                ->where('Body', $item->Body)
+                ->where('Gender', $item->Gender)
+                ->max('reservationNumber');
+    
+                $item->status = 'Reserved';
+                $item->reservationNumber = ++$highestReservation;
+                $item->save();
+            }
+            else{
+                if(in_array($item->Department, $shiftA)){
+                    $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
+                }
+                elseif(in_array($item->Department, $shiftB)){
+                    $item->claiming_schedule = "$scheduleB[0] to $scheduleB[2]";
+                }
+                else{
+                    return response()->json(['message' => 'Department not found in either shift'], status: 400);
+                }
+                $item->status = $status;
+                $item->reservationNumber = null;
+            }
         }
         
         $item->save();

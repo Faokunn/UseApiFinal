@@ -122,7 +122,7 @@ class BookCollectionController extends Controller
         return response()->json(['message' => 'Book Collection deleted successfully'], 200);
     }
 
-    public function changeStatus($id, $status){
+    public function changeStatus($id, $status, $stocks){
         $bookCollection = BookCollection::find($id);
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
@@ -165,9 +165,28 @@ class BookCollectionController extends Controller
             $bookCollection->code = null;
         }
         if($status == 'Request'){
-            $bookCollection->status = $status;
-            $bookCollection->reservationNumber = null;
-            $bookCollection->claiming_schedule = null;
+            if($stocks == 0){
+                $highestReservation = BookCollection::
+                where('BookName', $bookCollection->BookName)
+                ->max('reservationNumber');
+    
+                $bookCollection->status = 'Reserved';
+                $bookCollection->reservationNumber = ++$highestReservation;
+                $bookCollection->save();
+            }
+            else{
+                if(in_array($bookCollection->Department, $shiftA)){
+                    $bookCollection->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
+                }
+                elseif(in_array($bookCollection->Department, $shiftB)){
+                    $bookCollection->claiming_schedule = "$scheduleB[0] to $scheduleB[2]";
+                }
+                else{
+                    return response()->json(['message' => 'Department not found in either shift'], status: 400);
+                }
+                $bookCollection->status = 'Claim';
+                $bookCollection->reservationNumber = null;
+            } 
         }
         $bookCollection->save();
 
