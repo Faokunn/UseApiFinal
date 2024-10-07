@@ -225,8 +225,10 @@ class BookCollectionController extends Controller
         return response()->json(['message' => 'Reserved Books Successfully Prioritized'], 200);
     }
     
-    public function showAllBooks($stubag_id){
-        $bookCollections = BookCollection::where('stubag_id', $stubag_id)->get();
+    public function showAllBooks($stubag_id,$status){
+        $bookCollections = BookCollection::where('stubag_id', $stubag_id)
+        ->where('status', $status)
+        ->get();
         return response()->json(['bookCollections' => $bookCollections]);
     }
 }

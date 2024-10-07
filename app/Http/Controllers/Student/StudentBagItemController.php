@@ -245,8 +245,10 @@ class StudentBagItemController extends Controller
         
     }
 
-    public function showAllItems($stubag_id){
-        $items = StudentBagItem::where('stubag_id', $stubag_id)->get();
+    public function showAllItems($stubag_id, $status){
+        $items = StudentBagItem::where('stubag_id', $stubag_id)
+        ->where('status', $status)
+        ->get();
         return response()->json(['items' => $items]);
     }
 }

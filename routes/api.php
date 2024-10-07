@@ -51,14 +51,14 @@ Route::get('/studentbagitems/{id}/{status}', [StudentBagItemController::class, '
 Route::put('/studentbagitems/{id}/{status}', [StudentBagItemController::class, 'changeStatus']);
 Route::put('/bookreserveclaim/{id}/{status}/{stocks}', [StudentBagItemController::class, 'changeStatus']);
 Route::put('/reserveditems/{count}/{course}/{gender}/{type}/{body}/{size}', [StudentBagItemController::class, 'reservedItemFirst']);
-Route::get('/showallitems/{stubag_id}', [StudentBagItemController::class, 'showAllItems']);
+Route::get('/showallitems/{stubag_id}/{status}', [StudentBagItemController::class, 'showAllItems']);
 Route::get('/itempickup/{code}', [StudentBagItemController::class, 'codeShow']);
 
 Route::get('/bookcollections/{id}/{status}', [BookCollectionController::class, 'show']);
 Route::put('/bookcollections/{id}/{status}', [BookCollectionController::class, 'changeStatus']);
 Route::put('/bookreserveclaim/{id}/{status}/{stocks}', [BookCollectionController::class, 'changeStatus']);
 Route::put('/reservedbooks/{count}/{identifier}', [BookCollectionController::class, 'reservedBookFirst']);
-Route::get('/showallbooks/{stubag_id}', [BookCollectionController::class, 'showAllBooks']);
+Route::get('/showallbooks/{stubag_id}/{status}', [BookCollectionController::class, 'showAllBooks']);
 Route::get('/bookpickup/{code}', [BookCollectionController::class, 'codeShow']);
 
 Route::put('/notificationdone/{id}', [MailsController::class,'notificationDone']);
