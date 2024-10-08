@@ -10,7 +10,7 @@ class AnnouncementController extends Controller
 {
     public function index(){
         $data = Announcement::orderBy('id', 'desc')
-        ->all();
+        ->get();
         return response()->json(['announcement'=>$data]);
     }
     public function store(Request $request){
