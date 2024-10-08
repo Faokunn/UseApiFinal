@@ -9,7 +9,8 @@ use App\Models\Admin\Announcement;
 class AnnouncementController extends Controller
 {
     public function index(){
-        $data = Announcement::all();
+        $data = Announcement::orderBy('id', 'desc')
+        ->all();
         return response()->json(['announcement'=>$data]);
     }
     public function store(Request $request){
@@ -42,7 +43,9 @@ class AnnouncementController extends Controller
     }
 
     public function show($department){
-        $announcements = Announcement::where('department', $department)->get();
+        $announcements = Announcement::where('department', $department)
+        ->orderBy('id', 'desc')
+        ->get();
         $announcements->map(function($announcement) {
             $announcement->created_at = $announcement->created_at->toDateString();
             return $announcement;

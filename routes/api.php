@@ -75,6 +75,7 @@ Route::apiResource('admins', AdminController::class);
 // BY LANCE
 // Announcements
 Route::apiResource('announcements', AnnouncementController::class);
+Route::post('createannouncements', [AnnouncementController::class, 'store']);
 
 // Department
 Route::apiResource('departments', DepartmentController::class);
