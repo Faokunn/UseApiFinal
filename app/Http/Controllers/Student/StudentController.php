@@ -66,11 +66,13 @@ class StudentController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Validate the incoming request data
         $validator = Validator::make($request->all(), [
-            'password' => 'required|min:8|max:100',
+            'password' => 'required|max:100',
             'confirm_password' => 'required|same:password',
         ]);
-    
+
+        // Check if validation fails
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Validation Failed',
@@ -78,19 +80,26 @@ class StudentController extends Controller
             ], 422);
         }
 
+        // Find the student by ID
         $student = Student::find($id);
-    
+
+        // Check if student exists
         if (!$student) {
             return response()->json(['error' => 'Student not found'], 404);
         }
-    
+
+        // Hash and assign the new password
         $student->password = Hash::make($request->password);
-        $student->save();
-    
-        return response()->json([
-            'message' => 'Password updated successfully',
-            'data' => $student
-        ], 200);
+
+        // Attempt to save the changes
+        if ($student->save()) {
+            return response()->json([
+                'message' => 'Password updated successfully',
+                'data' => $student
+            ], 200);
+        } else {
+            return response()->json(['error' => 'Failed to update password'], 500);
+        }
     }
      public function destroy($id){
         $student = Student::find($id);
