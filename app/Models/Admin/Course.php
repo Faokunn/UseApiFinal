@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory;
-    use HasFactory;
     protected $fillable = [
         'courseName',
         'departmentID',
@@ -18,6 +17,11 @@ class Course extends Model
     // RELATION TO DEPARTMENTS TABLE
     public function department(){
         return $this->belongsTo(Department::class);
+    }
+
+    // RELATION TO STOCK TABLE
+    public function stock(){
+        return $this->hasMany(Stock::class);
     }
     
     // // RELATION TO ITEM_Books TABLE

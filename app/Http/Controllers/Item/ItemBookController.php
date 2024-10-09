@@ -15,8 +15,10 @@ class ItemBookController extends Controller
 
      }
 
-     public function show($id){
-
+     // DAGDAG / GINALAW NI LANCE
+     public function show($Department){
+        $data = ItemBook::where('Department', $Department)->get();
+        return response()->json($data);
      } 
 
      public function edit($id){

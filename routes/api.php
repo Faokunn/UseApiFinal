@@ -20,8 +20,7 @@ use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\CourseController;
-
-use App\Http\Controllers\Admin\ZestController;
+use App\Http\Controllers\Admin\StockController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -83,3 +82,7 @@ Route::apiResource('departments', DepartmentController::class);
 // Course
 Route::apiResource('courses', CourseController::class);
 Route::get('/courses/{$departmentID}', [CourseController::class, 'show']);
+
+// Stock
+Route::apiResource('stocks', StockController::class);
+Route::get('/stocks/{$Department}', [StockController::class, 'show']);
