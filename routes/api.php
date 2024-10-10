@@ -86,3 +86,6 @@ Route::get('/courses/{$departmentID}', [CourseController::class, 'show']);
 // Stock
 Route::apiResource('stocks', StockController::class);
 Route::get('/stocks/{$Department}', [StockController::class, 'show']);
+
+// Uniform custom routes
+Route::get('/uniforms/{Course}', [ItemrsoController::class, 'show']);

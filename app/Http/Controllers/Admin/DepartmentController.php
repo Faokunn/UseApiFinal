@@ -16,13 +16,13 @@ class DepartmentController extends Controller
         $request->validate([
             'name' => 'required|max:20|string',
             'color' => 'required|max:500|string',
-            'photo' => 'required|mimes:png,jpg,jpeg,webp',
+            'photo' => 'required|mimes:png,jpg,jpeg,webp|max:2048',
         ]);
         if ($request->has('photo')) {
             $file = $request->file('photo');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
-            $path = 'uploads/departments/';
+            $path = 'uploads/department/';
             $file->move($path, $filename);
         }
         Department::create([

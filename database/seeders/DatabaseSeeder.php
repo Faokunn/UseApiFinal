@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             CourseSeeder::class,
             ItemBookSeeder::class,
             StockSeeder::class,
+            UniformsSeeder::class,
 
             // StudentSeeder::class,
             // UpperUniformSeeder::class,
