@@ -25,7 +25,46 @@ class StudentBagItemController extends Controller
         return $code;
     }
 
-    public function store(Request $request,$stocks)
+    public function store(Request $request)
+    {
+        $scheduleA = ["Monday", "Tuesday", "Wednesday",];
+        $scheduleB = ["Thursday", "Friday", "Saturday"];
+
+        $validatedData = $request->validate([
+            'Department' => 'nullable|string|max:255',
+            'Course' => 'nullable|string|max:255',
+            'Gender' => 'nullable|string|max:50',
+            'Type' => 'required|string|max:255',
+            'Body' => 'required|string|max:255',
+            'Size' => 'required|string|max:255',
+            'Status' => 'required|string|max:255',
+            'code' => 'nullable|string|max:5',
+            'claiming_schedule' => 'nullable|string|max:255',
+            'shift' => "nullable|string|max:255",
+            'stubag_id' => 'required|integer|exists:student_bags,id',
+            'dateReceived' => 'nullable|date',
+            'reservationNumber' => 'nullable|integer|exists',
+        ]);
+
+        if (empty($validatedData['code'])) {
+            $validatedData['code'] = $this->generateCode();
+        }
+        
+        $existingItem = StudentBagItem::where('Type', $validatedData['Type'])
+            ->where('Body', $validatedData['Body'])
+            ->where('stubag_id', $validatedData['stubag_id'])
+            ->first();
+
+        if ($existingItem) {
+            return response()->json(['message' => 'Student Bag Item with this Type and Body already exists'], 409);
+        }
+
+        $item = StudentBagItem::create($validatedData);
+
+        return response()->json(['message' => 'Student Bag Item created successfully', 'item' => $item], 201);
+    }
+
+    public function requestitem(Request $request,$stocks)
     {
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
@@ -229,6 +268,50 @@ class StudentBagItemController extends Controller
                     return response()->json(['message' => 'Department not found in either shift'], status: 400);
                 }
                 $item->status = $status;
+                $item->reservationNumber = null;
+            }
+        }
+        
+        $item->save();
+
+        return response()->json(['message' => 'Status changed successfully'], status: 200);
+    }
+
+    public function changeRequestStatus($id, $status, $stocks){
+        $item = StudentBagItem::find($id);
+        $scheduleA = ["Monday", "Tuesday", "Wednesday",];
+        $scheduleB = ["Thursday", "Friday", "Saturday"];
+
+        if(!$item){
+            return response()->json(['Student Bag item not found'], status: 400);
+        }
+
+        if($status == 'Request'){
+            if($stocks == 0){
+                $items = StudentBagItem::find($id)->first();
+                $highestReservation = StudentBagItem::
+                where('Type', $item->Type)
+                ->where('Size', $item->Size)
+                ->where('Course', $item->Course)
+                ->where('Body', $item->Body)
+                ->where('Gender', $item->Gender)
+                ->max('reservationNumber');
+    
+                $item->status = 'Reserved';
+                $item->reservationNumber = ++$highestReservation;
+                $item->save();
+            }
+            else{
+                if($item->shift  == "A"){
+                    $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
+                }
+                elseif($item->shift  == "B"){
+                    $item->claiming_schedule = "$scheduleB[0] to $scheduleB[2]";
+                }
+                else{
+                    return response()->json(['message' => 'Department not found in either shift'], status: 400);
+                }
+                $item->status = "Claim";
                 $item->reservationNumber = null;
             }
         }

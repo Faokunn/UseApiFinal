@@ -24,8 +24,8 @@ class ProfileController extends Controller
         $validator = $request->validate([
             'FirstName' => 'string|max:20',
             'LastName' => 'string|max:20',
-            'Course' => 'string|max:4',
-            'Department' => 'string|max:4',
+            'Course' => 'string|max:20',
+            'Department' => 'string|max:20',
             'Year' => 'int|max:4',
             'Status' => 'string|max:255',
             'stu_id' => 'string|exists:students,studentId'
