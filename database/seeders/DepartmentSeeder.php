@@ -17,7 +17,7 @@ class DepartmentSeeder extends Seeder
                 'photo' => '1728137470.jpg',
             ],
             [
-                'name' => 'BONINAM',
+                'name' => 'CAHS',
                 'color' => 'WHITE/GREEN',
                 'photo' => '',
             ],

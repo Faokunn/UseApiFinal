@@ -15,8 +15,9 @@ class ItemrsoController extends Controller
 
      }
 
-     public function show($id){
-
+     public function show($Course){
+        $data = Itemrso::where('Course', $Course)->get();
+        return response()->json($data);
      } 
 
      public function edit($id){
