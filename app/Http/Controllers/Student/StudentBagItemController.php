@@ -25,8 +25,11 @@ class StudentBagItemController extends Controller
         return $code;
     }
 
-    public function store(Request $request)
+    public function store(Request $request,$stocks)
     {
+        $scheduleA = ["Monday", "Tuesday", "Wednesday",];
+        $scheduleB = ["Thursday", "Friday", "Saturday"];
+
         $validatedData = $request->validate([
             'Department' => 'nullable|string|max:255',
             'Course' => 'nullable|string|max:255',
@@ -37,6 +40,7 @@ class StudentBagItemController extends Controller
             'Status' => 'required|string|max:255',
             'code' => 'nullable|string|max:5',
             'claiming_schedule' => 'nullable|string|max:255',
+            'shift' => "nullable|string|max:255",
             'stubag_id' => 'required|integer|exists:student_bags,id',
             'dateReceived' => 'nullable|date',
             'reservationNumber' => 'nullable|integer|exists',
@@ -44,6 +48,34 @@ class StudentBagItemController extends Controller
 
         if (empty($validatedData['code'])) {
             $validatedData['code'] = $this->generateCode();
+        }
+
+        if($validatedData['Status'] == 'Request'){
+            if($stocks == 0){
+                $highestReservation = StudentBagItem::
+                where('Type', $validatedData['Type'])
+                ->where('Size', $validatedData['Size'])
+                ->where('Course', $validatedData['Course'])
+                ->where('Body', $validatedData['Body'])
+                ->where('Gender', $validatedData['Gender'])
+                ->max('reservationNumber');
+    
+                $validatedData['status'] = 'Reserved';
+                $validatedData['reservationNumber'] = ++$highestReservation;
+            }
+            else{
+                if($validatedData['shift'] == 'A'){
+                    $validatedData['claiming_schedule'] = "$scheduleA[0] to $scheduleA[2]";
+                }
+                elseif($validatedData['Department'] == 'B'){
+                    $validatedData['claiming_schedule'] = "$scheduleB[0] to $scheduleB[2]";
+                }
+                else{
+                    return response()->json(['message' => 'Department not found in either shift'], status: 400);
+                }
+                $validatedData['status'] = 'Claim';
+                $validatedData['reservationNumber'] = null;
+            }
         }
         
         $existingItem = StudentBagItem::where('Type', $validatedData['Type'])
@@ -131,9 +163,6 @@ class StudentBagItemController extends Controller
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
 
-        $shiftA = ["CMA"];
-        $shiftB = ["CITE"];
-
         if(!$item){
             return response()->json(['Student Bag item not found'], status: 400);
         }
@@ -155,10 +184,10 @@ class StudentBagItemController extends Controller
         
 
         if($status == 'Claim'){
-            if(in_array($item->Department, $shiftA)){
+            if($item->shift  == "A"){
                 $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
             }
-            elseif(in_array($item->Department, $shiftB)){
+            elseif($item->shift  == "B"){
                 $item->claiming_schedule = "$scheduleB[0] to $scheduleB[2]";
             }
             else{
@@ -190,10 +219,10 @@ class StudentBagItemController extends Controller
                 $item->save();
             }
             else{
-                if(in_array($item->Department, $shiftA)){
+                if($item->shift  == "A"){
                     $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
                 }
-                elseif(in_array($item->Department, $shiftB)){
+                elseif($item->shift  == "B"){
                     $item->claiming_schedule = "$scheduleB[0] to $scheduleB[2]";
                 }
                 else{
@@ -211,9 +240,7 @@ class StudentBagItemController extends Controller
     public function reservedItemFirst($count, $course, $gender, $type, $body, $size){
         $scheduleA = ["Monday", "Tuesday", "Wednesday"];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
-    
-        $shiftA = ["CMA"];
-        $shiftB = ["CITE"];
+
         $items = StudentBagItem::where('Course', $course) 
         ->where('Gender', $gender)
         ->where('Type', $type)
@@ -225,9 +252,10 @@ class StudentBagItemController extends Controller
         ->get();
 
         foreach($items as $item){
-            if (in_array($item->Department, $shiftA)) {
+            if($item->shift  == "A"){
                 $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
-            } elseif (in_array($item->Department, $shiftB)) {
+            }
+            elseif($item->shift  == "B"){
                 $item->claiming_schedule = "$scheduleB[0] to $scheduleB[2]";
             } else {
                 return response()->json(['message' => 'Department not found in either shift'], 400);
