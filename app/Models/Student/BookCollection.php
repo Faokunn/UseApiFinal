@@ -18,6 +18,7 @@ class BookCollection extends Model
         'code',
         'status',          
         'claiming_schedule',
+        'shift',
         'stubag_id',
         'reservationNumber',
         'dateReceived',  

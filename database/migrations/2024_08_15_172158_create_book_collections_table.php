@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('Status');
             $table->integer('reservationNumber')->nullable();
             $table->string('claiming_schedule')->nullable(); 
+            $table->string('shift')->nullable();
             $table->unsignedBigInteger('stubag_id');
             $table->foreign('stubag_id')->references('id')->on('student_bags')->onDelete('cascade');
             $table->timestamp('dateReceived')->nullable();

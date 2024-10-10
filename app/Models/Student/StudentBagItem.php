@@ -22,6 +22,7 @@ class StudentBagItem extends Model
         'stubag_id',
         'reservationNumber',
         'claiming_schedule',
+        'shift',
         'dateReceived'
     ];
 

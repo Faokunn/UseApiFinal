@@ -55,12 +55,15 @@ Route::get('/itempickup/{code}', [StudentBagItemController::class, 'codeShow']);
 
 Route::get('/bookcollections/{id}/{status}', [BookCollectionController::class, 'show']);
 Route::put('/bookcollections/{id}/{status}', [BookCollectionController::class, 'changeStatus']);
-Route::put('/bookreserveclaim/{id}/{status}/{stocks}', [BookCollectionController::class, 'changeStatus']);
+Route::put('/bookreserveclaim/{id}/{status}/{stocks}', [BookCollectionController::class, 'changeRequestStatus']);
 Route::put('/reservedbooks/{count}/{identifier}', [BookCollectionController::class, 'reservedBookFirst']);
 Route::get('/showallbooks/{stubag_id}/{status}', [BookCollectionController::class, 'showAllBooks']);
 Route::get('/bookpickup/{code}', [BookCollectionController::class, 'codeShow']);
 
 Route::put('/notificationdone/{id}', [MailsController::class,'notificationDone']);
+
+Route::post('/requestbook/{stocks}', [BookCollectionController::class, 'requestbook']);
+Route::post('/requestitem/{stocks}', [StudentBagItemController::class, 'store']);
 
 //Item
 Route::apiResource('item-books', ItemBookController::class);
