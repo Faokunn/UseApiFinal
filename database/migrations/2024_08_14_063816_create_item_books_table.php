@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('SubjectDesc');
             $table->integer('Stock');
             $table->integer(column: 'Reserved');
+            $table->timestamps();
         });
     }
 
