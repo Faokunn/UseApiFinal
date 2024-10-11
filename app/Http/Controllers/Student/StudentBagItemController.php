@@ -70,7 +70,7 @@ class StudentBagItemController extends Controller
     {
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
-
+        $requestController = new ItemrsoController();
         $validatedData = $request->validate([
             'Department' => 'nullable|string|max:255',
             'Course' => 'nullable|string|max:255',
@@ -103,6 +103,7 @@ class StudentBagItemController extends Controller
     
                 $validatedData['Status'] = 'Reserved';
                 $validatedData['reservationNumber'] = ++$highestReservation;
+                $requestController->reduceStock(1, $validatedData['Department'], $validatedData['Course'], $validatedData['Gender'], $validatedData['Type'], $validatedData['Body'], $validatedData['Size'], 'reserved');
             }
             else{
                 if($validatedData['shift'] == 'A'){
@@ -116,6 +117,7 @@ class StudentBagItemController extends Controller
                 }
                 $validatedData['Status'] = 'Claim';
                 $validatedData['reservationNumber'] = null; 
+                $requestController->reduceStock(1, $validatedData['Department'], $validatedData['Course'], $validatedData['Gender'], $validatedData['Type'], $validatedData['Body'], $validatedData['Size'], 'stock');
             }
         }
         
@@ -310,7 +312,6 @@ class StudentBagItemController extends Controller
             'redirectTo' => '',
             'notificationId' => $stuId
         ]);
-        // Logic for handling the request status
         if ($status == 'Request') {
             if ($stocks == 0) {
                 $highestReservation = StudentBagItem::where('Type', $item->Type)

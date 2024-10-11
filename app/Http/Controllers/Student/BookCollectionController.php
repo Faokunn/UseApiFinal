@@ -66,7 +66,7 @@ class BookCollectionController extends Controller
     {
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
-
+        $requestController = new ItemBookController();
         $validatedData = $request->validate([
             'BookName' => 'nullable|string|max:255',
             'SubjectCode' => 'nullable|string|max:255',
@@ -93,6 +93,7 @@ class BookCollectionController extends Controller
     
                 $validatedData['status'] = 'Reserved';
                 $validatedData['reservationNumber'] = ++$highestReservation;
+                $requestController->reduceStock(1, $validatedData['BookName'], "reserved");
             }
             else{
                 if($validatedData['shift'] == 'A'){
@@ -106,6 +107,7 @@ class BookCollectionController extends Controller
                 }
                 $validatedData['status'] = 'Claim';
                 $validatedData['reservationNumber'] = null;
+                $requestController->reduceStock(1, $validatedData['BookName'], "stock");
             }
         }
 
