@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('BookName');
             $table->string('SubjectCode');
             $table->string('SubjectDesc');
-            $table->string('Status');
             $table->integer('Stock');
             $table->integer(column: 'Reserved');
         });

@@ -103,7 +103,7 @@ class StudentBagItemController extends Controller
     
                 $validatedData['Status'] = 'Reserved';
                 $validatedData['reservationNumber'] = ++$highestReservation;
-                $requestController->reduceStock(1, $validatedData['Department'], $validatedData['Course'], $validatedData['Gender'], $validatedData['Type'], $validatedData['Body'], $validatedData['Size'], 'reserved');
+                $requestController->reduceStock(1, $validatedData['Course'], $validatedData['Gender'], $validatedData['Type'], $validatedData['Body'], $validatedData['Size'], 'reserved');
             }
             else{
                 if($validatedData['shift'] == 'A'){
@@ -117,7 +117,7 @@ class StudentBagItemController extends Controller
                 }
                 $validatedData['Status'] = 'Claim';
                 $validatedData['reservationNumber'] = null; 
-                $requestController->reduceStock(1, $validatedData['Department'], $validatedData['Course'], $validatedData['Gender'], $validatedData['Type'], $validatedData['Body'], $validatedData['Size'], 'stock');
+                $requestController->reduceStock(1, $validatedData['Course'], $validatedData['Gender'], $validatedData['Type'], $validatedData['Body'], $validatedData['Size'], 'stock');
             }
         }
         
@@ -238,7 +238,7 @@ class StudentBagItemController extends Controller
 
             $item->status = 'Reserved';
             $item->reservationNumber = ++$highestReservation;
-            $requestController->reduceStock(1, $department, $course, $gender, $type, $body, $size, 'reserved');
+            $requestController->reduceStock(1,  $course, $gender, $type, $body, $size, 'reserved');
             $item->save();
         }
         
@@ -262,7 +262,7 @@ class StudentBagItemController extends Controller
             $item->status = $status;
             $item->claiming_schedule = null;
             $item->code = null;
-            $requestController->reduceStock(1, $department, $course, $gender, $type, $body, $size,'stocks');
+            $requestController->reduceStock(1,  $course, $gender, $type, $body, $size,'stocks');
         }
         
         $item->save();
@@ -325,7 +325,7 @@ class StudentBagItemController extends Controller
                 $item->reservationNumber = ++$highestReservation;
 
                 // Here, reduce stock by 1 (or any other count as needed)
-                $requestController->reduceStock(1, $department, $course, $gender, $type, $body, $size, 'reserved');
+                $requestController->reduceStock(1,  $course, $gender, $type, $body, $size, 'reserved');
             } else {
                 if ($item->shift == "A") {
                     $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
@@ -337,7 +337,7 @@ class StudentBagItemController extends Controller
                 $item->Status = "Claim";
                 $item->reservationNumber = null;
 
-                $requestController->reduceStock(1, $department, $course, $gender, $type, $body, $size,'stocks');
+                $requestController->reduceStock(1,  $course, $gender, $type, $body, $size,'stocks');
             }
         }
 
@@ -358,7 +358,6 @@ class StudentBagItemController extends Controller
         ->orderBy('reservationNumber', 'asc')
         ->take($count)
         ->get();
-        $department = $items->Department;
         foreach($items as $item){
             if($item->shift  == "A"){
                 $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
@@ -371,12 +370,13 @@ class StudentBagItemController extends Controller
     
             $item->status = 'Claim';
             $item->reservationNumber = null;
-            $requestController->reduceStock($count, $department, $course, $gender, $type, $body, $size,'claim');
+            
             if (!$item->save()) {
                 return response()->json(['message' => 'Failed to update record for book ID: ' . $item->id], 500);
             } else {
             }
         }
+        $requestController->reduceStock($count, $course, $gender, $type, $body, $size,'reservedFirst');
         return response()->json(['message' => 'Reserved Items Successfully Prioritized'], status: 200);
         
     }
