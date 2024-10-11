@@ -22,7 +22,10 @@ class StockController extends Controller
         $request->validate([
             'stockName' => 'required|max:20|string',
             'stockPhoto' => 'required|mimes:png,jpg,jpeg,webp',
-            'courseID' => 'required|max:5|int'
+            'Department' => 'required|max:20|string',
+            'Gender' => 'required|max:20|string',
+            'Type' => 'required|max:20|string',
+            'Body' => 'required|max:20|string',
         ]);
         if ($request->has('photo')) {
             $file = $request->file('photo');
@@ -34,7 +37,7 @@ class StockController extends Controller
         Stock::create([
             'stockName' => 'required|max:20|string',
             'stockPhoto' => 'required|mimes:png,jpg,jpeg,webp',
-            'courseID' => 'required|max:5|int'
+            'courseID' => 'required|max:5|int' // MALI ATA TO BRO
         ]);
         return response()->json(['message' => "Added Succesfully"]);
     }
@@ -43,7 +46,10 @@ class StockController extends Controller
         $request->validate([
             'stockName' => 'required|max:20|string',
             'stockPhoto' => 'required|mimes:png,jpg,jpeg,webp',
-            'courseID' => 'required|max:5|int'
+            'Department' => 'required|max:20|string',
+            'Gender' => 'required|max:20|string',
+            'Type' => 'required|max:20|string',
+            'Body' => 'required|max:20|string',
         ]);
 
 

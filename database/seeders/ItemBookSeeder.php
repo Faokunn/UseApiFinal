@@ -19,7 +19,7 @@ class ItemBookSeeder extends Seeder
             [
                 'Department' => 'CAHS',
                 'BookName' => 'Physical Pharmacy and sciences',
-                'SubjectCode' => 'PHA 002',
+                'SubjectCode' => 'PHA 009',
                 'SubjectDesc' => 'Pharmacognosy and Chemistry',
                 'Stock' => '10',
                 'Reserved' => '0',
@@ -32,6 +32,51 @@ class ItemBookSeeder extends Seeder
                 'Stock' => '10',
                 'Reserved' => '0',
             ],
+            [
+                'Department' => 'CMA',
+                'BookName' => 'Business taxation',
+                'SubjectCode' => 'ACC 111',
+                'SubjectDesc' => 'Business law and regulations',
+                'Status' => '',
+                'Stock' => '10',
+            ],
+
+            // CEA
+
+            
+            // [
+            //     'Department' => '',
+            //     'BookName' => '',
+            //     'SubjectCode' => '',
+            //     'SubjectDesc' => '',
+            //     'Status' => '',
+            //     'Stock' => '10',
+            // ],
+            // [
+            //     'Department' => '',
+            //     'BookName' => '',
+            //     'SubjectCode' => '',
+            //     'SubjectDesc' => '',
+            //     'Status' => '',
+            //     'Stock' => '10',
+            // ],
+            // [
+            //     'Department' => '',
+            //     'BookName' => '',
+            //     'SubjectCode' => '',
+            //     'SubjectDesc' => '',
+            //     'Status' => '',
+            //     'Stock' => '10',
+            // ],
+            // [
+            //     'Department' => '',
+            //     'BookName' => '',
+            //     'SubjectCode' => '',
+            //     'SubjectDesc' => '',
+            //     'Status' => '',
+            //     'Stock' => '10',
+            // ],
+
         ]);
     }
 }

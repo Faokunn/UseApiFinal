@@ -12,10 +12,13 @@ class Stock extends Model
         'stockName',
         'stockPhoto',
         'Department',
+        'Gender',
+        'Type',
+        'Body',
     ];
 
-    // RELATION TO COURSES TABLE
-    public function departments(){
-        return $this->belongsTo(Department::class);
-    }
+    // // RELATION TO COURSES TABLE
+    // public function departments(){
+    //     return $this->belongsTo(Department::class);
+    // }
 }

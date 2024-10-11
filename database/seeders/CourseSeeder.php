@@ -15,7 +15,7 @@ class CourseSeeder extends Seeder
             [
                 'courseName' => 'BSIT',
                 'departmentID' => '1',
-                'courseDescription' => 'Bachelor of Science information Technology'
+                'courseDescription' => 'Bachelor of Science in Information Technology'
             ],
             // CAHS
             [
@@ -26,66 +26,72 @@ class CourseSeeder extends Seeder
             [
                 'courseName' => 'BSMLS',
                 'departmentID' => '2',
-                'courseDescription' => 'Bachelor of Science'
+                'courseDescription' => 'Bachelor of Science in Medical Sciences'
             ],
             [
                 'courseName' => 'BSPHARMA',
                 'departmentID' => '2',
-                'courseDescription' => 'Bachelor of Science'
+                'courseDescription' => 'Bachelor of Science in Pharmacy'
             ],
             [
                 'courseName' => 'BSPSYCH',
                 'departmentID' => '2',
-                'courseDescription' => 'Bachelor of Science'
+                'courseDescription' => 'Bachelor of Science in Psychology'
             ],
             // CEA
             [
                 'courseName' => 'BSCE',
                 'departmentID' => '3',
-                'courseDescription' => 'Bachelor of Science'
+                'courseDescription' => 'Bachelor of Science in Civil Engineering'
             ],
             [
                 'courseName' => 'BSCPE',
                 'departmentID' => '3',
-                'courseDescription' => 'Bachelor of Science'
+                'courseDescription' => 'Bachelor of Science in Computer Engineering'
             ],
             [
                 'courseName' => 'BSECE',
                 'departmentID' => '3',
-                'courseDescription' => 'Bachelor of Science'
+                'courseDescription' => 'Bachelor of Science in Electronic Engineering'
             ],
             // CMA
             [
                 'courseName' => 'BSA',
                 'departmentID' => '4',
-                'courseDescription' => 'Bachelor of Science'
+                'courseDescription' => 'Bachelor of Science in Accounting'
             ],
             [
                 'courseName' => 'BST',
                 'departmentID' => '4',
-                'courseDescription' => 'Bachelor of Science'
+                'courseDescription' => 'Bachelor of Science in Tourism'
             ],
             [
                 'courseName' => 'BSHM',
                 'departmentID' => '4',
-                'courseDescription' => 'Bachelor of Science'
+                'courseDescription' => 'Bachelor of Science in Hospitality Management'
             ],
             // CELA
             [
                 'courseName' => 'BSED',
                 'departmentID' => '5',
-                'courseDescription' => 'Bachelor of Science'
+                'courseDescription' => 'Bachelor of Science in Education'
             ],
             [
                 'courseName' => 'BSPOLSCI',
                 'departmentID' => '5',
-                'courseDescription' => 'Bachelor of Science'
+                'courseDescription' => 'Bachelor of Science in Political Science'
             ],
             // CCJE
             [
                 'courseName' => 'BSCRIM',
                 'departmentID' => '6',
-                'courseDescription' => 'Bachelor of Science'
+                'courseDescription' => 'Bachelor of Science in Criminology'
+            ],
+            // SHS
+            [
+                'courseName' => 'SHS',
+                'departmentID' => '7',
+                'courseDescription' => 'Senior High School'
             ],
             ]);
     }

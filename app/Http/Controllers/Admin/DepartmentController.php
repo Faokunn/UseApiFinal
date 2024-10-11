@@ -12,26 +12,38 @@ class DepartmentController extends Controller
         $data = Department::all();
         return response()->json($data);
     }
-    public function store(Request $request){
+    public function store(Request $request) {
+        // Validate the request data
         $request->validate([
             'name' => 'required|max:20|string',
             'color' => 'required|max:500|string',
             'photo' => 'required|mimes:png,jpg,jpeg,webp|max:2048',
         ]);
-        if ($request->has('photo')) {
+    
+        // Initialize filename and path variables
+        $filename = null;
+    
+        if ($request->hasFile('photo')) {
             $file = $request->file('photo');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
+    
+            // Move the file to the public/uploads/department directory
             $path = 'uploads/department/';
-            $file->move($path, $filename);
+            $file->move(public_path($path), $filename); // Ensure it's moved to the public directory
         }
+    
+        // Save the relative path (uploads/department/filename.jpg) to the database
         Department::create([
             'name' => $request->name,
             'color' => $request->color,
-            'photo' => $request->photo,
+            'photo' => $path . $filename, // This is stored as uploads/department/filename.jpg
         ]);
-        return response()->json(['message' => "Added Succesfully"]);
+    
+        return response()->json(['message' => "Added Successfully"]);
     }
+    
+    
     
     public function update(Request $request, $id){
         $request->validate([
