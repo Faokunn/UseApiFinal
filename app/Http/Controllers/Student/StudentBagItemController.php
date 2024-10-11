@@ -99,7 +99,7 @@ class StudentBagItemController extends Controller
                 ->where('Gender', $validatedData['Gender'])
                 ->max('reservationNumber');
     
-                $validatedData['status'] = 'Reserved';
+                $validatedData['Status'] = 'Reserved';
                 $validatedData['reservationNumber'] = ++$highestReservation;
             }
             else{
@@ -112,8 +112,8 @@ class StudentBagItemController extends Controller
                 else{
                     return response()->json(['message' => 'Department not found in either shift'], status: 400);
                 }
-                $validatedData['status'] = 'Claim';
-                $validatedData['reservationNumber'] = null;
+                $validatedData['Status'] = 'Claim';
+                $validatedData['reservationNumber'] = null; 
             }
         }
         
@@ -132,11 +132,21 @@ class StudentBagItemController extends Controller
     }
 
     public function show($stubag_id, $status)
-    {
-        $items = StudentBagItem::where('stubag_id', $stubag_id)
+    {   
+        if($status == 'All') {
+            $items = StudentBagItem::where('stubag_id', $stubag_id)
+            ->get();
+
+            return response()->json(['items' => $items]);
+        }
+        else{
+            $items = StudentBagItem::where('stubag_id', $stubag_id)
             ->where('Status', $status)
             ->get();
-        return response()->json(['items' => $items]);
+            return response()->json(['items' => $items]);
+
+        }
+
     }
 
     public function codeShow($code)
@@ -357,9 +367,19 @@ class StudentBagItemController extends Controller
     }
 
     public function showAllItems($stubag_id, $status){
-        $items = StudentBagItem::where('stubag_id', $stubag_id)
-        ->where('status', $status)
-        ->get();
-        return response()->json(['items' => $items]);
+
+        if($status == 'All') {
+            $items = StudentBagItem::where('stubag_id', $stubag_id)
+            ->get();
+
+            return response()->json(['items' => $items]);
+        }
+        else{
+            $items = StudentBagItem::where('stubag_id', $stubag_id)
+            ->where('status', $status)
+            ->get();
+            return response()->json(['items' => $items]);
+        }
+        
     }
 }

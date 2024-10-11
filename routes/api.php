@@ -92,3 +92,4 @@ Route::get('/stocks/{$Department}', [StockController::class, 'show']);
 
 // Uniform custom routes
 Route::get('/uniforms/{Course}', [ItemrsoController::class, 'show']);
+Route::put('/uniforms/reducestock/{count}/{department}/{course}/{gender}/{type}/{body}/{size}', [ItemrsoController::class, 'reduceStock']);
