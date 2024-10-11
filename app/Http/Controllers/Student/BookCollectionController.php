@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Student\BookCollection;
+use App\Http\Controllers\Item\ItemBookController;
+use App\Http\Controllers\Student\MailsController;
 
 class BookCollectionController extends Controller
 {   
@@ -64,7 +66,7 @@ class BookCollectionController extends Controller
     {
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
-
+        $requestController = new ItemBookController();
         $validatedData = $request->validate([
             'BookName' => 'nullable|string|max:255',
             'SubjectCode' => 'nullable|string|max:255',
@@ -91,6 +93,7 @@ class BookCollectionController extends Controller
     
                 $validatedData['status'] = 'Reserved';
                 $validatedData['reservationNumber'] = ++$highestReservation;
+                $requestController->reduceStock(1, $validatedData['BookName'], "reserved");
             }
             else{
                 if($validatedData['shift'] == 'A'){
@@ -104,6 +107,7 @@ class BookCollectionController extends Controller
                 }
                 $validatedData['status'] = 'Claim';
                 $validatedData['reservationNumber'] = null;
+                $requestController->reduceStock(1, $validatedData['BookName'], "stock");
             }
         }
 
@@ -198,6 +202,8 @@ class BookCollectionController extends Controller
         $bookCollection = BookCollection::find($id);
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
+        $requestController = new ItemBookController();
+        $bookname = $bookCollection->BookName;
 
         if(!$bookCollection){
             return response()->json(['Book not found'], status: 400);
@@ -207,7 +213,7 @@ class BookCollectionController extends Controller
             $highestReservation = BookCollection::
             where('BookName', $bookCollection->BookName)
             ->max('reservationNumber');
-
+            $requestController->reduceStock(1, $bookname, "reserved");
             $bookCollection->status = 'Reserved';
             $bookCollection->reservationNumber = ++$highestReservation;
             $bookCollection->save();
@@ -246,7 +252,31 @@ class BookCollectionController extends Controller
         if(!$bookCollection){
             return response()->json(['Book not found'], status: 400);
         }
+        $requestController = new ItemBookController();
+        $mailController = new MailsController();
 
+        $bookname = $bookCollection->BookName;
+        $stuId = $bookCollection->stubag_id;
+
+        $response = $requestController->specificBook($bookname);
+        if ($response->getStatusCode() == 200) {
+            $stockData = json_decode($response->getContent(), true);
+            $stocks = $stockData['stock']; 
+        } else {
+            return $response;
+        }
+        $description = $stocks == 0
+        ? "The Book {$bookCollection->code} you\'ve requested is now RESERVED."
+        : "The Book {$bookCollection->code} you\'ve requested is now ready to be CLAIMED.";
+    
+        
+        $mailController->createdata([
+            'description' => $description,
+            'time' => now(),
+            'isDone' => false,
+            'redirectTo' => '',
+            'notificationId' => $stuId
+        ]);
         if($status == 'Request'){
             if($stocks == 0){
                 $highestReservation = BookCollection::
@@ -256,6 +286,7 @@ class BookCollectionController extends Controller
                 $bookCollection->status = 'Reserved';
                 $bookCollection->reservationNumber = ++$highestReservation;
                 $bookCollection->save();
+                $requestController->reduceStock(1, $bookname, "reserved");
             }
             else{
                 if($bookCollection->shift == 'A'){
@@ -269,6 +300,8 @@ class BookCollectionController extends Controller
                 }
                 $bookCollection->status = 'Claim';
                 $bookCollection->reservationNumber = null;
+
+                $requestController->reduceStock(1, $bookname, "stocks");
             } 
         }
         $bookCollection->save();
@@ -279,7 +312,7 @@ class BookCollectionController extends Controller
     public function reservedBookFirst($count, $identifier) {
         $scheduleA = ["Monday", "Tuesday", "Wednesday"];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
-    
+        $requestController = new ItemBookController();
         $bookCollection = BookCollection::where('BookName', $identifier)
             ->whereNotNull('reservationNumber')
             ->orderBy('reservationNumber', 'asc')
@@ -298,12 +331,13 @@ class BookCollectionController extends Controller
     
             $books->status = 'Claim';
             $books->reservationNumber = null;
-    
+            
             if (!$books->save()) {
                 return response()->json(['message' => 'Failed to update record for book ID: ' . $books->id], 500);
             } else {
             }
         }
+        $requestController->reduceStock($count, $identifier, "reservedFirst");
         return response()->json(['message' => 'Reserved Books Successfully Prioritized'], 200);
     }
 

@@ -16,5 +16,6 @@ class Itemrso extends Model
         'Body',
         'Size',
         'Stock',
+        'Reserved'
     ];
 }
