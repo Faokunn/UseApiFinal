@@ -331,12 +331,13 @@ class BookCollectionController extends Controller
     
             $books->status = 'Claim';
             $books->reservationNumber = null;
-            $requestController->reduceStock($count, $identifier, "claim");
+            
             if (!$books->save()) {
                 return response()->json(['message' => 'Failed to update record for book ID: ' . $books->id], 500);
             } else {
             }
         }
+        $requestController->reduceStock($count, $identifier, "reservedFirst");
         return response()->json(['message' => 'Reserved Books Successfully Prioritized'], 200);
     }
 
