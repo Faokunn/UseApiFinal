@@ -14,5 +14,6 @@ class ItemBook extends Model
         'SubjectCode',   
         'SubjectDesc',     
         'Stock',
+        'Reserved'
     ];
 }

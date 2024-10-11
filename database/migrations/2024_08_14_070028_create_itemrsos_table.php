@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('Body');
             $table->string('Size');
             $table->integer('Stock');
+            $table->integer(column: 'Reserved');
             $table->timestamps();
         });
     }

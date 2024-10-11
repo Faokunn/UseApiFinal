@@ -23,6 +23,7 @@ class ItemBookSeeder extends Seeder
                 'SubjectDesc' => 'Pharmacognosy and Chemistry',
                 'Status' => '',
                 'Stock' => '10',
+                'Reserved' => '0',
             ],
             [
                 'Department' => 'CAHS',
@@ -31,6 +32,7 @@ class ItemBookSeeder extends Seeder
                 'SubjectDesc' => 'test',
                 'Status' => 'IDK',
                 'Stock' => '10',
+                'Reserved' => '0',
             ],
         ]);
     }

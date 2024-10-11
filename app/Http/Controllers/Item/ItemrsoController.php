@@ -31,7 +31,7 @@ class ItemrsoController extends Controller
 
    }
 
-   public function reduceStock($count, $department, $course, $gender, $type, $body, $size)
+   public function reduceStock($count, $department, $course, $gender, $type, $body, $size,$logic)
    {
       try {
          $item = Itemrso::where('Course', $course)
@@ -45,19 +45,31 @@ class ItemrsoController extends Controller
          if (!$item) {
                return response()->json(['message' => 'Item not found'], 404);
          }
-   
-         if ($count <= 0) {
+         if($logic == 'stock'){
+            if ($count <= 0) {
                return response()->json(['message' => 'Invalid stock reduction count'], 400);
-         }
-   
-         if ($item->Stock < $count) {
-               return response()->json(['message' => 'Insufficient stock'], 400);
-         }
+            }
+      
+            if ($item->Stock < $count) {
+                  return response()->json(['message' => 'Insufficient stock'], 400);
+            }
 
-         $item->Stock -= $count;
-         $item->save();
-   
-         return response()->json(['message' => 'Stock reduced successfully'], 200);
+            $item->Stock -= $count;
+            $item->save();
+      
+            return response()->json(['message' => 'Stock reduced successfully'], 200);
+         }else if($logic == 'reserved'){  
+            $item->Reserved += $count;
+            $item->save();
+      
+            return response()->json(['message' => 'Reserved increased successfully'], 200);
+         }else if($logic == 'claim'){
+            $item->Reserved -= $count;
+            $item->save();
+      
+            return response()->json(['message' => 'Reserved reduced successfully'], 200);
+         }
+         
       } catch (\Exception $e) {
          return response()->json(['message' => 'Error reducing stock: ' . $e->getMessage()], 500);
       }

@@ -20,6 +20,7 @@ class UniformsSeeder extends Seeder
                 'Body' => 'Upper',
                 'Size' => 'SSSS',
                 'Stock' => '10',
+                'Reserved' => '0',
             ],
             [
                 'Department' => 'CITE',
@@ -29,6 +30,7 @@ class UniformsSeeder extends Seeder
                 'Body' => 'Upper',
                 'Size' => 'S',
                 'Stock' => '10',
+                'Reserved' => '0',
             ],
             [
                 'Department' => 'CITE',
@@ -38,6 +40,7 @@ class UniformsSeeder extends Seeder
                 'Body' => 'Upper',
                 'Size' => 'M',
                 'Stock' => '10',
+                'Reserved' => '0',
             ],
             [
                 'Department' => 'CITE',
@@ -47,6 +50,7 @@ class UniformsSeeder extends Seeder
                 'Body' => 'Upper',
                 'Size' => 'L',
                 'Stock' => '10',
+                'Reserved' => '0',
             ],
             [
                 'Department' => 'CITE',
@@ -56,6 +60,7 @@ class UniformsSeeder extends Seeder
                 'Body' => 'Upper',
                 'Size' => 'XL',
                 'Stock' => '10',
+                'Reserved' => '0',
             ],
         ]);
     }

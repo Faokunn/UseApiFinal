@@ -213,11 +213,17 @@ class StudentBagItemController extends Controller
         $item = StudentBagItem::find($id);
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
-
+        $requestController = new ItemrsoController();
         if(!$item){
             return response()->json(['Student Bag item not found'], status: 400);
         }
-
+        $department = $item->Department;
+        $course = $item->Course;
+        $gender = $item->Gender;
+        $type = $item->Type;
+        $body = $item->Body;
+        $size = $item->Size;
+        $stuId = $item->stubag_id;
         if($status == 'Reserved'){
             $items = StudentBagItem::find($id)->first();
             $highestReservation = StudentBagItem::
@@ -230,6 +236,7 @@ class StudentBagItemController extends Controller
 
             $item->status = 'Reserved';
             $item->reservationNumber = ++$highestReservation;
+            $requestController->reduceStock(1, $department, $course, $gender, $type, $body, $size, 'reserved');
             $item->save();
         }
         
@@ -253,6 +260,7 @@ class StudentBagItemController extends Controller
             $item->status = $status;
             $item->claiming_schedule = null;
             $item->code = null;
+            $requestController->reduceStock(1, $department, $course, $gender, $type, $body, $size,'stocks');
         }
         
         $item->save();
@@ -316,7 +324,7 @@ class StudentBagItemController extends Controller
                 $item->reservationNumber = ++$highestReservation;
 
                 // Here, reduce stock by 1 (or any other count as needed)
-                $requestController->reduceStock(1, $department, $course, $gender, $type, $body, $size);
+                $requestController->reduceStock(1, $department, $course, $gender, $type, $body, $size, 'reserved');
             } else {
                 if ($item->shift == "A") {
                     $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
@@ -328,7 +336,7 @@ class StudentBagItemController extends Controller
                 $item->Status = "Claim";
                 $item->reservationNumber = null;
 
-                $requestController->reduceStock(1, $department, $course, $gender, $type, $body, $size);
+                $requestController->reduceStock(1, $department, $course, $gender, $type, $body, $size,'stocks');
             }
         }
 
@@ -339,7 +347,7 @@ class StudentBagItemController extends Controller
     public function reservedItemFirst($count, $course, $gender, $type, $body, $size){
         $scheduleA = ["Monday", "Tuesday", "Wednesday"];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
-
+        $requestController = new ItemrsoController();
         $items = StudentBagItem::where('Course', $course) 
         ->where('Gender', $gender)
         ->where('Type', $type)
@@ -349,7 +357,7 @@ class StudentBagItemController extends Controller
         ->orderBy('reservationNumber', 'asc')
         ->take($count)
         ->get();
-
+        $department = $items->Department;
         foreach($items as $item){
             if($item->shift  == "A"){
                 $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
@@ -362,7 +370,7 @@ class StudentBagItemController extends Controller
     
             $item->status = 'Claim';
             $item->reservationNumber = null;
-    
+            $requestController->reduceStock($count, $department, $course, $gender, $type, $body, $size,'claim');
             if (!$item->save()) {
                 return response()->json(['message' => 'Failed to update record for book ID: ' . $item->id], 500);
             } else {
