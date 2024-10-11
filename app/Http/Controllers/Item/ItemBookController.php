@@ -32,13 +32,10 @@ class ItemBookController extends Controller
 
    }
 
-   public function reduceStock($count, $department, $bookname, $subcode, $subdesc)
+   public function reduceStock($count, $bookname)
    {
       try {
          $item = ItemBook::where('BookName', $bookname)
-               ->where('Department', $department)
-               ->where('SubjectCode', $subcode)
-               ->where('SubjectDesc', $subdesc)
                ->first();
    
          if (!$item) {
@@ -60,5 +57,14 @@ class ItemBookController extends Controller
       } catch (\Exception $e) {
          return response()->json(['message' => 'Error reducing stock: ' . $e->getMessage()], 500);
       }
+   }
+   public function specificBook($bookname){
+      $item = ItemBook::where('BookName', $bookname)->first();
+
+      if (!$item) {
+         return response()->json(['message' => 'Item not found'], 404);
+      }
+
+      return response()->json(['stock' => $item->Stock], 200);
    }
 }

@@ -108,7 +108,7 @@ class StudentBagItemController extends Controller
                 if($validatedData['shift'] == 'A'){
                     $validatedData['claiming_schedule'] = "$scheduleA[0] to $scheduleA[2]";
                 }
-                elseif($validatedData['Department'] == 'B'){
+                elseif($validatedData['shift'] == 'B'){
                     $validatedData['claiming_schedule'] = "$scheduleB[0] to $scheduleB[2]";
                 }
                 else{
@@ -159,7 +159,7 @@ class StudentBagItemController extends Controller
             return response()->json(['message' => 'Item not found'], 404);
         }
 
-        if($item->Status != 'claim'){
+        if($item->Status != 'Claim'){
             return response()->json(['message' => 'Item is not ready for claiming'], 409);
         }
         else{
@@ -209,7 +209,7 @@ class StudentBagItemController extends Controller
         return response()->json(['message' => 'Student Bag Item deleted successfully'], 200);
     }
 
-    public function changeStatus($id, $status, $stocks){
+    public function changeStatus($id, $status){
         $item = StudentBagItem::find($id);
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
@@ -253,35 +253,6 @@ class StudentBagItemController extends Controller
             $item->status = $status;
             $item->claiming_schedule = null;
             $item->code = null;
-        }
-        if($status == 'Request'){
-            if($stocks == 0){
-                $items = StudentBagItem::find($id)->first();
-                $highestReservation = StudentBagItem::
-                where('Type', $item->Type)
-                ->where('Size', $item->Size)
-                ->where('Course', $item->Course)
-                ->where('Body', $item->Body)
-                ->where('Gender', $item->Gender)
-                ->max('reservationNumber');
-    
-                $item->status = 'Reserved';
-                $item->reservationNumber = ++$highestReservation;
-                $item->save();
-            }
-            else{
-                if($item->shift  == "A"){
-                    $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
-                }
-                elseif($item->shift  == "B"){
-                    $item->claiming_schedule = "$scheduleB[0] to $scheduleB[2]";
-                }
-                else{
-                    return response()->json(['message' => 'Department not found in either shift'], status: 400);
-                }
-                $item->status = $status;
-                $item->reservationNumber = null;
-            }
         }
         
         $item->save();

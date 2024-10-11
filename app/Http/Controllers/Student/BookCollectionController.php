@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Student\BookCollection;
+use App\Http\Controllers\Item\ItemBookController;
+use App\Http\Controllers\Student\MailsController;
 
 class BookCollectionController extends Controller
 {   
@@ -246,7 +248,31 @@ class BookCollectionController extends Controller
         if(!$bookCollection){
             return response()->json(['Book not found'], status: 400);
         }
+        $requestController = new ItemBookController();
+        $mailController = new MailsController();
 
+        $bookname = $bookCollection->BookName;
+        $stuId = $bookCollection->stubag_id;
+
+        $response = $requestController->specificBook($bookname);
+        if ($response->getStatusCode() == 200) {
+            $stockData = json_decode($response->getContent(), true);
+            $stocks = $stockData['stock']; 
+        } else {
+            return $response;
+        }
+        $description = $stocks == 0
+        ? "The Book {$bookCollection->code} you\'ve requested is now RESERVED."
+        : "The Book {$bookCollection->code} you\'ve requested is now ready to be CLAIMED.";
+    
+        
+        $mailController->createdata([
+            'description' => $description,
+            'time' => now(),
+            'isDone' => false,
+            'redirectTo' => '',
+            'notificationId' => $stuId
+        ]);
         if($status == 'Request'){
             if($stocks == 0){
                 $highestReservation = BookCollection::
@@ -269,6 +295,8 @@ class BookCollectionController extends Controller
                 }
                 $bookCollection->status = 'Claim';
                 $bookCollection->reservationNumber = null;
+
+                $requestController->reduceStock(1, $bookname);
             } 
         }
         $bookCollection->save();
