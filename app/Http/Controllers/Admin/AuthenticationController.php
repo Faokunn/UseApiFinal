@@ -13,34 +13,39 @@ class AuthenticationController extends Controller
 {
     public function login(Request $request) {
         $validator = Validator::make($request->all(), [
-            'adminID' => 'required|string|max:30',
-            'password' => 'required|max:16',
-
+            'adminID' => 'required',
+            'password' => 'required',
         ]);
-
-        if($validator->fails()) {
+    
+        if ($validator->fails()) {
             return response()->json([
                 'message' => 'Validation failed',
                 'errors' => $validator->errors()
             ], 422);
         }
-        $user = Admin::where('adminID', $request->adminID)->first();
-        if($user){
-            if(Hash::check($request->password,$user->password)){
-                    
-                $token=$user->createToken('auth-token')->plainTextToken;
-
-                return response()->json([
-                    'message'=>'Login successful',
-                    'token'=>$token,
-                    'data'=>$user
-                ], 200);
-            }else{
-                return response()->json(    [
-                    'message' => 'Incorrect credentials'
-                ], 400);
-                
-            }
+    
+        // Check if the student exists
+        $student = Admin::where('adminID', $request->adminID)->first();
+    
+        if (!$student) {
+            return response()->json([
+                'message' => 'Admin not found'
+            ], 404);
+        }
+    
+        // Check if the password is correct
+        if (Hash::check($request->password, $student->password)) {
+            $token = $student->createToken('auth-token')->plainTextToken;
+    
+            return response()->json([
+                'message' => 'Login successful',
+                'token' => $token,
+                'data' => $student
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Incorrect credentials'
+            ], 401); // Use 401 Unauthorized status code
         }
     }
     

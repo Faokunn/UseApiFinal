@@ -92,3 +92,5 @@ Route::get('/stocks/{$Department}', [StockController::class, 'show']);
 
 // Uniform custom routes
 Route::get('/uniforms/{Course}', [ItemrsoController::class, 'show']);
+Route::apiResource('uniforms', ItemrsoController::class);
+// Route::get('/uniforms/{Course}/{Gender}/{Type}/{}', [ItemrsoController::class, 'show']);

@@ -11,11 +11,24 @@ class ItemBookController extends Controller
         
     }
 
-    public function store(Request $request){  
+    public function store(Request $request){
+      $request->validate([
+          'Department' => 'required|max:50|string',
+          'BookName' => 'required|max:50|string',
+          'SubjectCode' => 'required|max:50|string',
+          'SubjectDesc' => 'required|max:50|string',
+          'Stock' => 'required|max:10|string',
+      ]);
+      ItemBook::create([
+          'Department' => $request->Department,
+          'BookName' => $request->BookName,
+          'SubjectCode' => $request->SubjectCode,
+          'SubjectDesc' => $request->SubjectDesc,
+          'Stock' => $request->Stock,
+      ]);
+      return response()->json(['message' => "Added Succesfully"]);
+  }
 
-     }
-
-     // DAGDAG / GINALAW NI LANCE
      public function show($Department){
         $data = ItemBook::where('Department', $Department)->get();
         return response()->json($data);
