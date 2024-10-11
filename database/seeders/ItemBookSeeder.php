@@ -22,7 +22,7 @@ class ItemBookSeeder extends Seeder
                 'SubjectCode' => 'PHA 002',
                 'SubjectDesc' => 'Pharmacognosy and Chemistry',
                 'Status' => '',
-                'Stock' => '1',
+                'Stock' => '10',
             ],
             [
                 'Department' => 'CAHS',
@@ -30,7 +30,7 @@ class ItemBookSeeder extends Seeder
                 'SubjectCode' => 'RAH',
                 'SubjectDesc' => 'test',
                 'Status' => 'IDK',
-                'Stock' => '1',
+                'Stock' => '10',
             ],
         ]);
     }
