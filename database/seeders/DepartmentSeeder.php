@@ -42,6 +42,11 @@ class DepartmentSeeder extends Seeder
                 'photo' => '',
             ],
             [
+                'name' => 'CAS',
+                'color' => 'WHITE',
+                'photo' => '',
+            ],
+            [
                 'name' => 'SHS',
                 'color' => 'GREEN',
                 'photo' => '',

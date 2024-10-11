@@ -87,10 +87,16 @@ class CourseSeeder extends Seeder
                 'departmentID' => '6',
                 'courseDescription' => 'Bachelor of Science in Criminology'
             ],
+            // CAS
+            [
+                'courseName' => 'CAS',
+                'departmentID' => '7',
+                'courseDescription' => 'College of Arts and Sciences'
+            ],
             // SHS
             [
                 'courseName' => 'SHS',
-                'departmentID' => '7',
+                'departmentID' => '8',
                 'courseDescription' => 'Senior High School'
             ],
             ]);

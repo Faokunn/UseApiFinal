@@ -116,11 +116,6 @@ class StockSeeder extends Seeder
                 'stockPhoto' => 'PLACEHOLDER',
                 'Department' => 'CELA',
             ],
-            [
-                'stockName' => 'P.E.',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CELA',
-            ],
 
             // CELA
             [
@@ -138,10 +133,16 @@ class StockSeeder extends Seeder
                 'stockPhoto' => 'PLACEHOLDER',
                 'Department' => 'CCJE',
             ],
+            // CAS
+            [
+                'stockName' => 'University',
+                'stockPhoto' => 'SHS.png',
+                'Department' => 'CAS',
+            ],
             [
                 'stockName' => 'P.E.',
                 'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CCJE',
+                'Department' => 'CAS',
             ],
 
             // SHS
