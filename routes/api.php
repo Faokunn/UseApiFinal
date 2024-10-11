@@ -48,7 +48,7 @@ Route::put('/updateprofile/{id}', [ProfileController::class, 'update']);
 
 Route::get('/studentbagitems/{id}/{status}', [StudentBagItemController::class, 'show']);
 Route::put('/studentbagitems/{id}/{status}', [StudentBagItemController::class, 'changeStatus']);
-Route::put('/itemreserveclaim/{id}/{status}/{stocks}', [StudentBagItemController::class, 'changeRequestStatus']);
+Route::put('/itemreserveclaim/{id}/{status}', [StudentBagItemController::class, 'changeRequestStatus']);
 Route::put('/reserveditems/{count}/{course}/{gender}/{type}/{body}/{size}', [StudentBagItemController::class, 'reservedItemFirst']);
 Route::get('/showallitems/{stubag_id}/{status}', [StudentBagItemController::class, 'showAllItems']);
 Route::get('/itempickup/{code}', [StudentBagItemController::class, 'codeShow']);
@@ -64,7 +64,7 @@ Route::put('/notificationdone/{id}', [MailsController::class,'notificationDone']
 
 Route::post('/requestbook/{stocks}', [BookCollectionController::class, 'requestbook']);
 Route::post('/requestitem/{stocks}', [StudentBagItemController::class, 'requestitem']);
-
+    
 //Item
 Route::apiResource('item-books', ItemBookController::class);
 Route::apiResource('item-lower-uniforms', ItemLowerUniformController::class);
@@ -92,5 +92,6 @@ Route::get('/stocks/{$Department}', [StockController::class, 'show']);
 
 // Uniform custom routes
 Route::get('/uniforms/{Course}', [ItemrsoController::class, 'show']);
+Route::put('/uniforms/stock/{department}/{course}/{gender}/{type}/{body}/{size}', [ItemrsoController::class, 'specificUniform']);
 Route::put('/uniforms/reducestock/{count}/{department}/{course}/{gender}/{type}/{body}/{size}', [ItemrsoController::class, 'reduceStock']);
 Route::put('/books/reducestock/{count}/{department}/{bookname}/{subcode}/{subdesc}', [ItemBookController::class, 'reduceStock']);

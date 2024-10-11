@@ -62,5 +62,21 @@ class ItemrsoController extends Controller
          return response()->json(['message' => 'Error reducing stock: ' . $e->getMessage()], 500);
       }
    }
+
+   public function specificUniform($department, $course, $gender, $type, $body, $size){
+      $item = Itemrso::where('Course', $course)
+               ->where('Department', $department)
+               ->where('Gender', $gender)
+               ->where('Type', $type)
+               ->where('Body', $body)
+               ->where('Size', $size)
+               ->first();
+
+      if (!$item) {
+         return response()->json(['message' => 'Item not found'], 404);
+      }
+
+      return response()->json(['stock' => $item->Stock], 200);
+   }
    
 }

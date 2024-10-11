@@ -17,6 +17,10 @@ class MailsController extends Controller
         return Mails::create($request->all());
      }
 
+     public function createData(array $data) {
+        return Mails::create($data);
+    }
+
     public function notificationDone($id){
         Mails::where('id', $id)->update(['isDone' => true]);
         return response() -> json(['message' => 'Email Marked as Done']);    

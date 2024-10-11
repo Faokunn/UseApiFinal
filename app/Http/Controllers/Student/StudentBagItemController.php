@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Student\StudentBagItem;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Item\ItemrsoController;
+use App\Http\Controllers\Student\MailsController;
 
 class StudentBagItemController extends Controller
 {
@@ -15,7 +17,7 @@ class StudentBagItemController extends Controller
     }
 
     public function generateCode(){
-        $code = mt_rand(00000, 99999);
+        $code = mt_rand(10000, 99999);
         $existingCode = StudentBagItem::where('code', $code)->first();
 
         if ($existingCode) {
@@ -287,48 +289,81 @@ class StudentBagItemController extends Controller
         return response()->json(['message' => 'Status changed successfully'], status: 200);
     }
 
-    public function changeRequestStatus($id, $status, $stocks){
+    public function changeRequestStatus($id, $status)
+    {
         $item = StudentBagItem::find($id);
-        $scheduleA = ["Monday", "Tuesday", "Wednesday",];
+        $scheduleA = ["Monday", "Tuesday", "Wednesday"];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
 
-        if(!$item){
-            return response()->json(['Student Bag item not found'], status: 400);
+        if (!$item) {
+            return response()->json(['message' => 'Student Bag item not found'], 400);
         }
 
-        if($status == 'Request'){
-            if($stocks == 0){
-                $items = StudentBagItem::find($id)->first();
-                $highestReservation = StudentBagItem::
-                where('Type', $item->Type)
-                ->where('Size', $item->Size)
-                ->where('Course', $item->Course)
-                ->where('Body', $item->Body)
-                ->where('Gender', $item->Gender)
-                ->max('reservationNumber');
+        // Create an instance of ItemrsoController to access specificUniform and reduceStock
+        $requestController = new ItemrsoController();
+        $mailController = new MailsController();
+
+        $department = $item->Department;
+        $course = $item->Course;
+        $gender = $item->Gender;
+        $type = $item->Type;
+        $body = $item->Body;
+        $size = $item->Size;
+        $stuId = $item->stubag_id;
+
+        // Get the stock using specificUniform
+        $response = $requestController->specificUniform($department, $course, $gender, $type, $body, $size);
+        if ($response->getStatusCode() == 200) {
+            $stockData = json_decode($response->getContent(), true);
+            $stocks = $stockData['stock']; 
+        } else {
+            return $response;
+        }
+        $description = $stocks == 0
+        ? "The item {$item->code} you\'ve requested is now RESERVED."
+        : "The item {$item->code} you\'ve requested is now ready to be CLAIMED.";
     
-                $item->status = 'Reserved';
+        
+        $mailController->createdata([
+            'description' => $description,
+            'time' => now(),
+            'isDone' => false,
+            'redirectTo' => '',
+            'notificationId' => $stuId
+        ]);
+        // Logic for handling the request status
+        if ($status == 'Request') {
+            if ($stocks == 0) {
+                $highestReservation = StudentBagItem::where('Type', $item->Type)
+                    ->where('Size', $item->Size)
+                    ->where('Course', $item->Course)
+                    ->where('Body', $item->Body)
+                    ->where('Gender', $item->Gender)
+                    ->max('reservationNumber');
+
+                $item->Status = 'Reserved';
                 $item->reservationNumber = ++$highestReservation;
-                $item->save();
-            }
-            else{
-                if($item->shift  == "A"){
+
+                // Here, reduce stock by 1 (or any other count as needed)
+                $requestController->reduceStock(1, $department, $course, $gender, $type, $body, $size);
+            } else {
+                if ($item->shift == "A") {
                     $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
-                }
-                elseif($item->shift  == "B"){
+                } elseif ($item->shift == "B") {
                     $item->claiming_schedule = "$scheduleB[0] to $scheduleB[2]";
+                } else {
+                    return response()->json(['message' => 'Department not found in either shift'], 400);
                 }
-                else{
-                    return response()->json(['message' => 'Department not found in either shift'], status: 400);
-                }
-                $item->status = "Claim";
+                $item->Status = "Claim";
                 $item->reservationNumber = null;
+
+                $requestController->reduceStock(1, $department, $course, $gender, $type, $body, $size);
             }
         }
-        
+
         $item->save();
 
-        return response()->json(['message' => 'Status changed successfully'], status: 200);
+        return response()->json(['message' => 'Status changed successfully'], 200);
     }
     public function reservedItemFirst($count, $course, $gender, $type, $body, $size){
         $scheduleA = ["Monday", "Tuesday", "Wednesday"];
