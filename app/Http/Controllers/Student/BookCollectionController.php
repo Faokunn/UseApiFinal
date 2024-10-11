@@ -337,7 +337,7 @@ class BookCollectionController extends Controller
             } else {
             }
         }
-        $requestController->reduceStock($count, $identifier, "reservedFirst");
+        $requestController->reduceStock($count, $identifier, 'reservedFirst');
         return response()->json(['message' => 'Reserved Books Successfully Prioritized'], 200);
     }
 
