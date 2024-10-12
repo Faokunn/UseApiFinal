@@ -7,6 +7,7 @@ use App\Models\Student\StudentBagItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Item\ItemrsoController;
 use App\Http\Controllers\Student\MailsController;
+use App\Http\Controllers\Admin\DepartmentController;
 
 class StudentBagItemController extends Controller
 {
@@ -71,6 +72,7 @@ class StudentBagItemController extends Controller
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
         $requestController = new ItemrsoController();
+        $departmentController = new DepartmentController();
         $validatedData = $request->validate([
             'Department' => 'nullable|string|max:255',
             'Course' => 'nullable|string|max:255',
@@ -104,6 +106,10 @@ class StudentBagItemController extends Controller
                 $validatedData['Status'] = 'Reserved';
                 $validatedData['reservationNumber'] = ++$highestReservation;
                 $requestController->reduceStock(1, $validatedData['Course'], $validatedData['Gender'], $validatedData['Type'], $validatedData['Body'], $validatedData['Size'], 'reserved');
+                $responseClaim = $departmentController->displaycounts($validatedData['Department'], 1, 'reserved', 'add');
+                if ($responseClaim->getStatusCode() !== 200) {
+                    return $responseClaim; // Return error response from displaycounts if not successful
+                }
             }
             else{
                 if($validatedData['shift'] == 'A'){
@@ -118,6 +124,10 @@ class StudentBagItemController extends Controller
                 $validatedData['Status'] = 'Claim';
                 $validatedData['reservationNumber'] = null; 
                 $requestController->reduceStock(1, $validatedData['Course'], $validatedData['Gender'], $validatedData['Type'], $validatedData['Body'], $validatedData['Size'], 'stock');
+                $responseClaim = $departmentController->displaycounts($validatedData['Department'], 1, 'claim', 'add');
+                if ($responseClaim->getStatusCode() !== 200) {
+                    return $responseClaim; 
+                }
             }
         }
         
@@ -216,6 +226,7 @@ class StudentBagItemController extends Controller
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
         $requestController = new ItemrsoController();
+        $departmentController = new DepartmentController();
         if(!$item){
             return response()->json(['Student Bag item not found'], status: 400);
         }
@@ -238,12 +249,15 @@ class StudentBagItemController extends Controller
 
             $item->status = 'Reserved';
             $item->reservationNumber = ++$highestReservation;
+            $departmentController->displaycounts($items->Department, 1, 'reserved', 'add');
+            
             $requestController->reduceStock(1,  $course, $gender, $type, $body, $size, 'reserved');
             $item->save();
         }
         
 
         if($status == 'Claim'){
+            $items = StudentBagItem::find($id)->first();
             if($item->shift  == "A"){
                 $item->claiming_schedule = "$scheduleA[0] to $scheduleA[2]";
             }
@@ -255,14 +269,20 @@ class StudentBagItemController extends Controller
             }
             $item->status = $status;
             $item->reservationNumber = null;
+            $departmentController->displaycounts($items->Department, 1, 'claim', 'add');
+            $departmentController->displaycounts($items->Department, 1, 'reserved', 'subtract');
+        
         }
 
         if($status == 'Complete'){
+            $items = StudentBagItem::find($id)->first();
             $item->dateReceived = now();
             $item->status = $status;
             $item->claiming_schedule = null;
             $item->code = null;
             $requestController->reduceStock(1,  $course, $gender, $type, $body, $size,'stocks');
+            $departmentController->displaycounts($items->Department, 1, 'complete', 'add');
+            $departmentController->displaycounts($items->Department, 1, 'claim', 'subtract');
         }
         
         $item->save();
@@ -280,7 +300,7 @@ class StudentBagItemController extends Controller
             return response()->json(['message' => 'Student Bag item not found'], 400);
         }
 
-        // Create an instance of ItemrsoController to access specificUniform and reduceStock
+        $departmentController = new DepartmentController();
         $requestController = new ItemrsoController();
         $mailController = new MailsController();
 
@@ -323,8 +343,10 @@ class StudentBagItemController extends Controller
 
                 $item->Status = 'Reserved';
                 $item->reservationNumber = ++$highestReservation;
-
-                // Here, reduce stock by 1 (or any other count as needed)
+                $responseClaim = $departmentController->displaycounts($item->Department, 1, 'reserved', 'add');
+                if ($responseClaim->getStatusCode() !== 200) {
+                    return $responseClaim; // Return error response from displaycounts if not successful
+                }
                 $requestController->reduceStock(1,  $course, $gender, $type, $body, $size, 'reserved');
             } else {
                 if ($item->shift == "A") {
@@ -336,7 +358,10 @@ class StudentBagItemController extends Controller
                 }
                 $item->Status = "Claim";
                 $item->reservationNumber = null;
-
+                $responseClaim = $departmentController->displaycounts($item->Department, 1, 'claim', 'add');
+                if ($responseClaim->getStatusCode() !== 200) {
+                    return $responseClaim; // Return error response from displaycounts if not successful
+                }
                 $requestController->reduceStock(1,  $course, $gender, $type, $body, $size,'stocks');
             }
         }
@@ -349,6 +374,7 @@ class StudentBagItemController extends Controller
         $scheduleA = ["Monday", "Tuesday", "Wednesday"];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
         $requestController = new ItemrsoController();
+        $departmentController = new DepartmentController();
         $items = StudentBagItem::where('Course', $course) 
         ->where('Gender', $gender)
         ->where('Type', $type)
@@ -367,7 +393,15 @@ class StudentBagItemController extends Controller
             } else {
                 return response()->json(['message' => 'Department not found in either shift'], 400);
             }
-    
+
+            $responseClaim = $departmentController->displaycounts($item->Department, 1, 'claim', 'add');
+            if ($responseClaim->getStatusCode() !== 200) {
+                return $responseClaim; // Return error response from displaycounts if not successful
+            }
+            $responseClaim = $departmentController->displaycounts($item->Department, 1, 'reserved', 'subtract');
+            if ($responseClaim->getStatusCode() !== 200) {
+                return $responseClaim; // Return error response from displaycounts if not successful
+            }
             $item->status = 'Claim';
             $item->reservationNumber = null;
             
@@ -396,5 +430,10 @@ class StudentBagItemController extends Controller
             return response()->json(['items' => $items]);
         }
         
+    }
+
+    public function completedItems(){
+        $items = StudentBagItem::where('Status', "Complete")->get();
+        return response()->json(['items' => $items], 200);
     }
 }

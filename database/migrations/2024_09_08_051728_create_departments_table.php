@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('color');
             $table->string('photo');
+            $table->integer('reserved');
+            $table->integer('claim');
+            $table->integer('completed');
             $table->timestamps();
         });
     }

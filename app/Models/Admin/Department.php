@@ -12,6 +12,9 @@ class Department extends Model
         'name',
         'color',
         'photo',
+        'reserved',
+        'claim',
+        'completed'
     ];
     
     public function courses(){

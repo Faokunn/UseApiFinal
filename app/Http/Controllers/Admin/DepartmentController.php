@@ -76,4 +76,53 @@ class DepartmentController extends Controller
         $data -> delete();
         return response()->json(['message' => "Deleted Successfully"]);
     }
+
+    public function displaycounts($department, $count, $logic, $operator)
+    {
+        $data = Department::where('name', $department)->first();
+
+        if (!$data) {
+            return response()->json(['message' => 'No data found'], 404);
+        }
+
+        if ($logic == 'reserved') {
+            if ($operator == 'add') {
+                $data->reserved += $count;
+                $data->save();
+                return response()->json(["message" => "Reserved Count Increased for {$department}"], 200);
+            } elseif ($operator == 'subtract') {
+                $data->reserved -= $count;
+                $data->save();
+                return response()->json(["message" => "Reserved Count Decreased for {$department}"], 200);
+            }
+        }
+
+        if ($logic == 'claim') {
+            if ($operator == 'add') {
+                $data->claim += $count;
+                $data->save();
+                return response()->json(["message" => "Claimed Count Increased for {$department}"], 200);
+            } elseif ($operator == 'subtract') {
+                $data->claim -= $count;
+                $data->save();
+                return response()->json(["message" => "Claimed Count Decreased for {$department}"], 200);
+            }
+        }
+
+        if ($logic == 'complete') {
+            if ($operator == 'add') {
+                $data->completed += $count;
+                $data->save();
+                return response()->json(["message" => "Completed Count Increased for {$department}"], 200);
+            } elseif ($operator == 'subtract') {
+                $data->completed -= $count;
+                $data->save();
+                return response()->json(["message" => "Completed Count Decreased for {$department}"], 200);
+            }
+        }
+
+        $data->save();
+
+        return response()->json(["message" => "Data updated successfully"], 200);
+    }
 }

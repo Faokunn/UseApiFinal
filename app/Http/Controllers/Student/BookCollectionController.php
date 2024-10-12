@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Student\BookCollection;
 use App\Http\Controllers\Item\ItemBookController;
 use App\Http\Controllers\Student\MailsController;
+use App\Http\Controllers\Admin\DepartmentController;
 
 class BookCollectionController extends Controller
 {   
@@ -67,6 +68,7 @@ class BookCollectionController extends Controller
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
         $requestController = new ItemBookController();
+        $departmentController = new DepartmentController();
         $validatedData = $request->validate([
             'BookName' => 'nullable|string|max:255',
             'SubjectCode' => 'nullable|string|max:255',
@@ -94,6 +96,7 @@ class BookCollectionController extends Controller
                 $validatedData['status'] = 'Reserved';
                 $validatedData['reservationNumber'] = ++$highestReservation;
                 $requestController->reduceStock(1, $validatedData['BookName'], "reserved");
+                $departmentController->displaycounts($validatedData['Department'], 1, 'reserved', 'add');
             }
             else{
                 if($validatedData['shift'] == 'A'){
@@ -108,6 +111,7 @@ class BookCollectionController extends Controller
                 $validatedData['status'] = 'Claim';
                 $validatedData['reservationNumber'] = null;
                 $requestController->reduceStock(1, $validatedData['BookName'], "stock");
+                $departmentController->displaycounts($validatedData['Department'], 1, 'claim', 'add');
             }
         }
 
@@ -203,6 +207,7 @@ class BookCollectionController extends Controller
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
         $requestController = new ItemBookController();
+        $departmentController = new DepartmentController();
         $bookname = $bookCollection->BookName;
 
         if(!$bookCollection){
@@ -214,6 +219,7 @@ class BookCollectionController extends Controller
             where('BookName', $bookCollection->BookName)
             ->max('reservationNumber');
             $requestController->reduceStock(1, $bookname, "reserved");
+            $departmentController->displaycounts($bookCollection->Department, 1, 'reserved', 'add');
             $bookCollection->status = 'Reserved';
             $bookCollection->reservationNumber = ++$highestReservation;
             $bookCollection->save();
@@ -231,6 +237,8 @@ class BookCollectionController extends Controller
             }
             $bookCollection->status = $status;
             $bookCollection->reservationNumber = null;
+            $departmentController->displaycounts($bookCollection->Department, 1, 'claim', 'add');
+            $departmentController->displaycounts($bookCollection->Department, 1, 'reserved', 'subtract');
         }
 
         if($status == 'Complete'){
@@ -238,6 +246,8 @@ class BookCollectionController extends Controller
             $bookCollection->status = $status;
             $bookCollection->claiming_schedule = null;
             $bookCollection->code = null;
+            $departmentController->displaycounts($bookCollection->Department, 1, 'complete', 'add');
+            $departmentController->displaycounts($bookCollection->Department, 1, 'claim', 'subtract');
         }
         $bookCollection->save();
 
@@ -254,6 +264,7 @@ class BookCollectionController extends Controller
         }
         $requestController = new ItemBookController();
         $mailController = new MailsController();
+        $departmentController = new DepartmentController();
 
         $bookname = $bookCollection->BookName;
         $stuId = $bookCollection->stubag_id;
@@ -286,6 +297,7 @@ class BookCollectionController extends Controller
                 $bookCollection->status = 'Reserved';
                 $bookCollection->reservationNumber = ++$highestReservation;
                 $bookCollection->save();
+                $departmentController->displaycounts($bookCollection->Department, 1, 'reserved', 'add');
                 $requestController->reduceStock(1, $bookname, "reserved");
             }
             else{
@@ -300,7 +312,7 @@ class BookCollectionController extends Controller
                 }
                 $bookCollection->status = 'Claim';
                 $bookCollection->reservationNumber = null;
-
+                $departmentController->displaycounts($bookCollection->Department, 1, 'claim', 'add');
                 $requestController->reduceStock(1, $bookname, "stocks");
             } 
         }
@@ -313,6 +325,7 @@ class BookCollectionController extends Controller
         $scheduleA = ["Monday", "Tuesday", "Wednesday"];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
         $requestController = new ItemBookController();
+        $departmentController = new DepartmentController();
         $bookCollection = BookCollection::where('BookName', $identifier)
             ->whereNotNull('reservationNumber')
             ->orderBy('reservationNumber', 'asc')
@@ -331,6 +344,8 @@ class BookCollectionController extends Controller
     
             $books->status = 'Claim';
             $books->reservationNumber = null;
+            $departmentController->displaycounts($books->Department, 1, 'claim', 'add');
+            $departmentController->displaycounts($books->Department, 1, 'reserved', 'subtract');
             
             if (!$books->save()) {
                 return response()->json(['message' => 'Failed to update record for book ID: ' . $books->id], 500);
@@ -357,5 +372,10 @@ class BookCollectionController extends Controller
     // Return the book collections as JSON
     return response()->json(['bookCollections' => $bookCollections]);
         }
+    }
+
+    public function completedBooks(){
+        $books = BookCollection::where('status', "Comeplete")->get();
+        return response()->json(['items' => $books], 200);
     }
 }
