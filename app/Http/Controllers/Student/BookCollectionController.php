@@ -254,7 +254,7 @@ class BookCollectionController extends Controller
         return response()->json(['message' => 'Status changed successfully'], status: 200);
     }
 
-    public function changeRequestStatus($id, $status, $stocks){
+    public function changeRequestStatus($id, $status){
         $bookCollection = BookCollection::find($id);
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];

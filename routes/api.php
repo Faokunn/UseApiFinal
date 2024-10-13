@@ -55,7 +55,7 @@ Route::get('/itempickup/{code}', [StudentBagItemController::class, 'codeShow']);
 
 Route::get('/bookcollections/{id}/{status}', [BookCollectionController::class, 'show']);
 Route::put('/bookcollections/{id}/{status}', [BookCollectionController::class, 'changeStatus']);
-Route::put('/bookreserveclaim/{id}/{status}/{stocks}', [BookCollectionController::class, 'changeRequestStatus']);
+Route::put('/bookreserveclaim/{id}/{status}', [BookCollectionController::class, 'changeRequestStatus']);
 Route::put('/reservedbooks/{count}/{identifier}', [BookCollectionController::class, 'reservedBookFirst']);
 Route::get('/showallbooks/{stubag_id}/{status}', [BookCollectionController::class, 'showAllBooks']);
 Route::get('/bookpickup/{code}', [BookCollectionController::class, 'codeShow']);
