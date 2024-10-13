@@ -20,6 +20,10 @@ class AdminSeeder extends Seeder
                 'adminID' => '12345',
                 'password' => Hash::make('12345'),
             ],
+            [
+                'adminID' => '00-0000-0000',
+                'password' => Hash::make('00000'),
+            ],
         ]);
     }
 }
