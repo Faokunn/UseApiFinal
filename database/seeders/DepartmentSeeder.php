@@ -14,7 +14,7 @@ class DepartmentSeeder extends Seeder
             [
                 'name' => 'CITE',
                 'color' => 'BLACK',
-                'photo' => '',
+                'photo' => 'CITE.jpg',
                 'reserved' => '0',
                 'claim' => '0',
                 'completed' => '0'
@@ -22,7 +22,7 @@ class DepartmentSeeder extends Seeder
             [
                 'name' => 'CAHS',
                 'color' => 'WHITE',
-                'photo' => '',
+                'photo' => 'CAHS.jpg',
                 'reserved' => '0',
                 'claim' => '0',
                 'completed' => '0'
@@ -30,7 +30,7 @@ class DepartmentSeeder extends Seeder
             [
                 'name' => 'CEA',
                 'color' => 'RED',
-                'photo' => '',
+                'photo' => 'CEA.jpg',
                 'reserved' => '0',
                 'claim' => '0',
                 'completed' => '0'
@@ -38,7 +38,7 @@ class DepartmentSeeder extends Seeder
             [
                 'name' => 'CMA',
                 'color' => 'YELLOW',
-                'photo' => '',
+                'photo' => 'CMA.jpg',
                 'reserved' => '0',
                 'claim' => '0',
                 'completed' => '0'
@@ -46,7 +46,7 @@ class DepartmentSeeder extends Seeder
             [
                 'name' => 'CELA',
                 'color' => 'BLUE',
-                'photo' => '',
+                'photo' => 'CELA.jpg',
                 'reserved' => '0',
                 'claim' => '0',
                 'completed' => '0'
@@ -54,7 +54,7 @@ class DepartmentSeeder extends Seeder
             [
                 'name' => 'CCJE',
                 'color' => 'GRAY',
-                'photo' => '',
+                'photo' => 'CCJE.jpg',
                 'reserved' => '0',
                 'claim' => '0',
                 'completed' => '0'
@@ -62,7 +62,7 @@ class DepartmentSeeder extends Seeder
             [
                 'name' => 'CAS',
                 'color' => 'WHITE',
-                'photo' => '',
+                'photo' => 'CAS.jpg',
                 'reserved' => '0',
                 'claim' => '0',
                 'completed' => '0'
@@ -70,7 +70,7 @@ class DepartmentSeeder extends Seeder
             [
                 'name' => 'SHS',
                 'color' => 'GREEN',
-                'photo' => '',
+                'photo' => 'SHS.jpg',
                 'reserved' => '0',
                 'claim' => '0',
                 'completed' => '0'

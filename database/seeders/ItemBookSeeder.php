@@ -90,77 +90,167 @@ class ItemBookSeeder extends Seeder
                 'Stock' => '10',
                 'Reserved' => '0',
             ],
+
+            // BSA
+            [
+                'Course' => 'BSA',
+                'Department' => 'CAHS',
+                'BookName' => 'Conceptual framework and accounting standards',
+                'SubjectCode' => 'ACC 102',
+                'SubjectDesc' => 'Basic financial accounting and regulations',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            [
+                'Course' => 'BSA',
+                'Department' => 'CMA',
+                'BookName' => 'Managerial economics',
+                'SubjectCode' => 'BAM 040',
+                'SubjectDesc' => 'Law on obligations and contracts',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+
+            [
+                'Course' => 'BSA',
+                'Department' => 'CMA',
+                'BookName' => 'Income taxation',
+                'SubjectCode' => 'FIN 081',
+                'SubjectDesc' => 'Financial management',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
             
 
-
-            // [
-            //     'Department' => 'CMA',
-            //     'BookName' => 'Basic financial accounting and regulations',
-            //     'SubjectCode' => 'ACC 102',
-            //     'SubjectDesc' => 'Conceptual framework and accounting standards',
-            //     'Stock' => '10',
-            //     'Reserved' => '0',
-            // ],
-            // [
-            //     'Department' => 'CMA',
-            //     'BookName' => 'Managerial economics',
-            //     'SubjectCode' => 'BAM 040',
-            //     'SubjectDesc' => 'Law on obligations and contracts',
-            //     'Stock' => '10',
-            //     'Reserved' => '0',
-            // ],
-            // [
-            //     'Department' => 'CMA',
-            //     'BookName' => 'Income taxation',
-            //     'SubjectCode' => 'FIN 081',
-            //     'SubjectDesc' => 'Financial management',
-            //     'Stock' => '10',
-            //     'Reserved' => '0',
-            // ],
-            // [
-            //     'Department' => 'CMA',
-            //     'BookName' => 'Business taxation',
-            //     'SubjectCode' => 'ACC 111',
-            //     'SubjectDesc' => 'Business law and regulations',
-            //     'Stock' => '10',
-            //     'Reserved' => '0',
-            // ],
+            [
+                'Course' => 'Business taxation',
+                'Department' => 'CMA',
+                'BookName' => 'ACC 111',
+                'SubjectCode' => 'ACC 111',
+                'SubjectDesc' => 'Business law and regulations',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            
 
             // CEA
+            //CE
+            [
+                'Course' => 'BSCE',
+                'Department' => 'CEA',
+                'BookName' => 'Applied Calculus',
+                'SubjectCode' => 'CAL 021',
+                'SubjectDesc' => 'Variations for Engineers',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
 
-            
-            // [
-            //     'Department' => '',
-            //     'BookName' => '',
-            //     'SubjectCode' => '',
-            //     'SubjectDesc' => '',
-            //     'Status' => '',
-            //     'Stock' => '10',
-            // ],
-            // [
-            //     'Department' => '',
-            //     'BookName' => '',
-            //     'SubjectCode' => '',
-            //     'SubjectDesc' => '',
-            //     'Status' => '',
-            //     'Stock' => '10',
-            // ],
-            // [
-            //     'Department' => '',
-            //     'BookName' => '',
-            //     'SubjectCode' => '',
-            //     'SubjectDesc' => '',
-            //     'Status' => '',
-            //     'Stock' => '10',
-            // ],
-            // [
-            //     'Department' => '',
-            //     'BookName' => '',
-            //     'SubjectCode' => '',
-            //     'SubjectDesc' => '',
-            //     'Status' => '',
-            //     'Stock' => '10',
-            // ],
+            [
+                'Course' => 'BSCE',
+                'Department' => 'CEA',
+                'BookName' => 'Tensor Calculus',
+                'SubjectCode' => 'CAL 203',
+                'SubjectDesc' => 'Simplified tools and Techniques',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            [
+                'Course' => 'BSCE',
+                'Department' => 'CEA',
+                'BookName' => 'Advanced Calculus',
+                'SubjectCode' => 'CAL 223',
+                'SubjectDesc' => 'Applications in physics and Chemistry',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            // BSCPE
+
+            [
+                'Course' => 'BSCPE',
+                'Department' => 'CEA',
+                'BookName' => 'Applied Calculus',
+                'SubjectCode' => 'CAL 021',
+                'SubjectDesc' => 'Variations for Engineers',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+
+            [
+                'Course' => 'BSCPE',
+                'Department' => 'CEA',
+                'BookName' => 'Tensor Calculus',
+                'SubjectCode' => 'CAL 203',
+                'SubjectDesc' => 'Simplified tools and Techniques',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            [
+                'Course' => 'BSCPE',
+                'Department' => 'CEA',
+                'BookName' => 'Advanced Calculus',
+                'SubjectCode' => 'CAL 223',
+                'SubjectDesc' => 'Applications in physics and Chemistry',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            // BSECE
+            [
+                'Course' => 'BSECE',
+                'Department' => 'CEA',
+                'BookName' => 'Applied Calculus',
+                'SubjectCode' => 'CAL 021',
+                'SubjectDesc' => 'Variations for Engineers',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+
+            [
+                'Course' => 'BSECE',
+                'Department' => 'CEA',
+                'BookName' => 'Tensor Calculus',
+                'SubjectCode' => 'CAL 203',
+                'SubjectDesc' => 'Simplified tools and Techniques',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            [
+                'Course' => 'BSECE',
+                'Department' => 'CEA',
+                'BookName' => 'Advanced Calculus',
+                'SubjectCode' => 'CAL 223',
+                'SubjectDesc' => 'Applications in physics and Chemistry',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            //BS ARCHI
+            [
+                'Course' => 'BSARCHI',
+                'Department' => 'CEA',
+                'BookName' => 'Applied Calculus',
+                'SubjectCode' => 'CAL 021',
+                'SubjectDesc' => 'Variations for Engineers',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+
+            [
+                'Course' => 'BSARCHI',
+                'Department' => 'CEA',
+                'BookName' => 'Tensor Calculus',
+                'SubjectCode' => 'CAL 203',
+                'SubjectDesc' => 'Simplified tools and Techniques',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            [
+                'Course' => 'BSARCHI',
+                'Department' => 'CEA',
+                'BookName' => 'Advanced Calculus',
+                'SubjectCode' => 'CAL 223',
+                'SubjectDesc' => 'Applications in physics and Chemistry',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
 
         ]);
     }

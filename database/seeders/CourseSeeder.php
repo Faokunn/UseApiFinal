@@ -11,91 +11,98 @@ class CourseSeeder extends Seeder
     public function run(): void
     {
         DB::table("courses")->insert([
-            // CITE
+            // CITE //
             [
-                'courseName' => 'BSIT',
+                'courseName' => 'BSIT', //
                 'departmentID' => '1',
                 'courseDescription' => 'Bachelor of Science in Information Technology'
             ],
-            // CAHS
+            // CAHS //
             [
-                'courseName' => 'BSN',
+                'courseName' => 'BSN', //
                 'departmentID' => '2',
                 'courseDescription' => 'Bachelor of Science in Nursing'
             ],
             [
-                'courseName' => 'BSMLS',
+                'courseName' => 'BSMLS', //
                 'departmentID' => '2',
                 'courseDescription' => 'Bachelor of Science in Medical Sciences'
             ],
             [
-                'courseName' => 'BSPHARMA',
+                'courseName' => 'BSPHARMA', //
                 'departmentID' => '2',
                 'courseDescription' => 'Bachelor of Science in Pharmacy'
             ],
             [
-                'courseName' => 'BSPSYCH',
+                'courseName' => 'BSPSYCH', //
                 'departmentID' => '2',
                 'courseDescription' => 'Bachelor of Science in Psychology'
             ],
-            // CEA
+            // CEA //
             [
-                'courseName' => 'BSCE',
+                'courseName' => 'BSCE', //
                 'departmentID' => '3',
                 'courseDescription' => 'Bachelor of Science in Civil Engineering'
             ],
             [
-                'courseName' => 'BSCPE',
+                'courseName' => 'BSCPE', //
                 'departmentID' => '3',
                 'courseDescription' => 'Bachelor of Science in Computer Engineering'
             ],
             [
-                'courseName' => 'BSECE',
+                'courseName' => 'BSECE', //
                 'departmentID' => '3',
                 'courseDescription' => 'Bachelor of Science in Electronic Engineering'
             ],
+            [
+                'courseName' => 'BSARCHI', //
+                'departmentID' => '3',
+                'courseDescription' => 'Bachelor of Science in Architecture'
+            ],
             // CMA
             [
-                'courseName' => 'BSA',
+                'courseName' => 'BSA', //
                 'departmentID' => '4',
                 'courseDescription' => 'Bachelor of Science in Accounting'
             ],
             [
-                'courseName' => 'BST',
+                'courseName' => 'BST', //
                 'departmentID' => '4',
                 'courseDescription' => 'Bachelor of Science in Tourism'
             ],
             [
-                'courseName' => 'BSHM',
+                'courseName' => 'BSHM', //
                 'departmentID' => '4',
                 'courseDescription' => 'Bachelor of Science in Hospitality Management'
             ],
-            // CELA
+
+
+            // CELA //
             [
-                'courseName' => 'BSED',
+                'courseName' => 'BSED', //
                 'departmentID' => '5',
                 'courseDescription' => 'Bachelor of Science in Education'
             ],
             [
-                'courseName' => 'BSPOLSCI',
+                'courseName' => 'BSPOLSCI', //
                 'departmentID' => '5',
                 'courseDescription' => 'Bachelor of Science in Political Science'
             ],
-            // CCJE
+            // CCJE //
             [
-                'courseName' => 'BSCRIM',
+                'courseName' => 'BSCRIM', //
                 'departmentID' => '6',
                 'courseDescription' => 'Bachelor of Science in Criminology'
             ],
             // CAS
             [
-                'courseName' => 'CAS',
+                'courseName' => 'CAS', //
                 'departmentID' => '7',
                 'courseDescription' => 'College of Arts and Sciences'
             ],
             // SHS
             [
-                'courseName' => 'SHS',
+                'courseName' => 'SHS', //
                 'departmentID' => '8',
                 'courseDescription' => 'Senior High School'
             ],
