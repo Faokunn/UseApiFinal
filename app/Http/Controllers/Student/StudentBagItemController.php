@@ -292,14 +292,13 @@ class StudentBagItemController extends Controller
 
     public function changeRequestStatus($id, $status)
     {
-        $item = StudentBagItem::find($id);
+        $item = StudentBagItem::where('id',$id)->first();
         $scheduleA = ["Monday", "Tuesday", "Wednesday"];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
 
         if (!$item) {
             return response()->json(['message' => 'Student Bag item not found'], 400);
         }
-
         $departmentController = new DepartmentController();
         $requestController = new ItemrsoController();
         $mailController = new MailsController();

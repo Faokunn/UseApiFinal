@@ -255,7 +255,7 @@ class BookCollectionController extends Controller
     }
 
     public function changeRequestStatus($id, $status){
-        $bookCollection = BookCollection::find($id);
+        $bookCollection = BookCollection::where('id',$id)->first();
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
 
