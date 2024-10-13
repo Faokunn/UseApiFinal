@@ -11,6 +11,7 @@ class UniformsSeeder extends Seeder
     public function run(): void
     {
         DB::table("itemrsos")->insert([
+            // CITE
             // CORPO UPPER
             [
                 'Department' => 'CITE',
@@ -58,6 +59,58 @@ class UniformsSeeder extends Seeder
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
                 'Body' => 'Upper',
+                'Size' => 'XL',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            //CORPO LOWER
+            // CORPO UPPER
+            [
+                'Department' => 'CITE',
+                'Course' => 'BSIT',
+                'Gender' => 'Male',
+                'Type' => 'Corporate',
+                'Body' => 'Lower',
+                'Size' => 'YES',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            [
+                'Department' => 'CITE',
+                'Course' => 'BSIT',
+                'Gender' => 'Male',
+                'Type' => 'Corporate',
+                'Body' => 'Lower',
+                'Size' => 'S',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            [
+                'Department' => 'CITE',
+                'Course' => 'BSIT',
+                'Gender' => 'Male',
+                'Type' => 'Corporate',
+                'Body' => 'Lower',
+                'Size' => 'M',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            [
+                'Department' => 'CITE',
+                'Course' => 'BSIT',
+                'Gender' => 'Male',
+                'Type' => 'Corporate',
+                'Body' => 'Lower',
+                'Size' => 'L',
+                'Stock' => '10',
+                'Reserved' => '0',
+            ],
+            [
+                'Department' => 'CITE',
+                'Course' => 'BSIT',
+                'Gender' => 'Male',
+                'Type' => 'Corporate',
+                'Body' => 'Lower',
                 'Size' => 'XL',
                 'Stock' => '10',
                 'Reserved' => '0',

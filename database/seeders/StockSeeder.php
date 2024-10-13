@@ -13,149 +13,192 @@ class StockSeeder extends Seeder
     {
         DB::table("stocks")->insert([
             // CITE
+            // BSIT
             [
-                'stockName' => 'Corporate',
+                'stockName' => 'Corporate Shirt',
                 'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CITE',
+                'Course' => 'BSIT',
+                'Gender' => 'Male',
+                'Type' => 'Corporate',
+                'Body' => 'Upper',
+            ],
+            [
+                'stockName' => 'Corporate Pants',
+                'stockPhoto' => 'PLACEHOLDER',
+                'Course' => 'BSIT',
+                'Gender' => 'Male',
+                'Type' => 'Corporate',
+                'Body' => 'Lower',
             ],
             [
                 'stockName' => 'RSO',
                 'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CITE',
-            ],
-            [
-                'stockName' => 'University',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CITE',
-            ],
-            [
-                'stockName' => 'P.E.',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CITE',
+                'Course' => 'BSIT',
+                'Gender' => 'Male',
+                'Type' => 'RSO',
+                'Body' => 'Upper',
             ],
 
             // CAHS
+            // BSN
             [
-                'stockName' => 'Corporate',
+                'stockName' => 'Corporate Shirt',
                 'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CAHS',
+                'Course' => 'BSN',
+                'Gender' => 'Male',
+                'Type' => 'Corporate',
+                'Body' => 'Upper',
+            ],
+            [
+                'stockName' => 'Corporate Pants',
+                'stockPhoto' => 'PLACEHOLDER',
+                'Course' => 'BSN',
+                'Gender' => 'Male',
+                'Type' => 'Corporate',
+                'Body' => 'Lower',
             ],
             [
                 'stockName' => 'RSO',
                 'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CAHS',
-            ],
-            [
-                'stockName' => 'University',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CAHS',
-            ],
-            [
-                'stockName' => 'P.E.',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CAHS',
+                'Course' => 'BSN',
+                'Gender' => 'Male',
+                'Type' => 'RSO',
+                'Body' => 'Upper',
             ],
 
-            // CEA
+            // BSMLS
             [
                 'stockName' => 'Corporate',
                 'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CEA',
+                'Course' => 'BSMLS',
+                'Gender' => 'Male',
+                'Type' => 'Corporate',
+                'Body' => 'Upper',
             ],
             [
                 'stockName' => 'RSO',
                 'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CEA',
+                'Course' => 'BSMLS',
+                'Gender' => 'Male',
+                'Type' => 'RSO',
+                'Body' => 'Upper',
             ],
-            [
-                'stockName' => 'University',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CEA',
-            ],
-            [
-                'stockName' => 'P.E.',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CEA',
-            ],
+            // BSPHARMA
+            // BSPSYCH
+            // BSCE
+            
 
-            // CMA
-            [
-                'stockName' => 'Corporate',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CMA',
-            ],
-            [
-                'stockName' => 'RSO',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CMA',
-            ],
-            [
-                'stockName' => 'University',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CMA',
-            ],
-            [
-                'stockName' => 'P.E.',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CMA',
-            ],
+            // CEAaa
+            // BSCE
+            // BSCPE
+            // BSECE
+            // BSARCHI
+            
+            // [
+            //     'stockName' => 'Corporate',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CEA',
+            // ],
+            // [
+            //     'stockName' => 'RSO',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CEA',
+            // ],
+            // [
+            //     'stockName' => 'University',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CEA',
+            // ],
+            // [
+            //     'stockName' => 'P.E.',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CEA',
+            // ],
 
-            // CELA
-            [
-                'stockName' => 'Corporate',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CELA',
-            ],
-            [
-                'stockName' => 'RSO',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CELA',
-            ],
-            [
-                'stockName' => 'University',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CELA',
-            ],
+            // // CMAaa
+            // // BSA
+            // // BST
+            // // BSHM
+            // [
+            //     'stockName' => 'Corporate',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CMA',
+            // ],
+            // [
+            //     'stockName' => 'RSO',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CMA',
+            // ],
+            // [
+            //     'stockName' => 'University',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CMA',
+            // ],
+            // [
+            //     'stockName' => 'P.E.',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CMA',
+            // ],
 
-            // CELA
-            [
-                'stockName' => 'Corporate',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CCJE',
-            ],
-            [
-                'stockName' => 'RSO',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CCJE',
-            ],
-            [
-                'stockName' => 'University',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CCJE',
-            ],
-            // CAS
-            [
-                'stockName' => 'University',
-                'stockPhoto' => 'SHS.png',
-                'Department' => 'CAS',
-            ],
-            [
-                'stockName' => 'P.E.',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'CAS',
-            ],
+            // // CELAaa
+            // // BSED
+            // // BSPOLSCI
+            // [
+            //     'stockName' => 'Corporate',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CELA',
+            // ],
+            // [
+            //     'stockName' => 'RSO',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CELA',
+            // ],
+            // [
+            //     'stockName' => 'University',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CELA',
+            // ],
 
-            // SHS
-            [
-                'stockName' => 'University',
-                'stockPhoto' => 'SHS.png',
-                'Department' => 'SHS',
-            ],
-            [
-                'stockName' => 'P.E.',
-                'stockPhoto' => 'PLACEHOLDER',
-                'Department' => 'SHS',
-            ],
+            // // CCJE
+            // // BSCRIM
+            // [
+            //     'stockName' => 'Corporate',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CCJE',
+            // ],
+            // [
+            //     'stockName' => 'RSO',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CCJE',
+            // ],
+            // [
+            //     'stockName' => 'University',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CCJE',
+            // ],
+            // // CAS
+            // [
+            //     'stockName' => 'University',
+            //     'stockPhoto' => 'SHS.png',
+            //     'Course' => 'CAS',
+            // ],
+            // [
+            //     'stockName' => 'P.E.',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'CAS',
+            // ],
+
+            // // SHS
+            // [
+            //     'stockName' => 'University',
+            //     'stockPhoto' => 'SHS.png',
+            //     'Course' => 'SHS',
+            // ],
+            // [
+            //     'stockName' => 'P.E.',
+            //     'stockPhoto' => 'PLACEHOLDER',
+            //     'Course' => 'SHS',
+            // ],
         ]);
     }
 }

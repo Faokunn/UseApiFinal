@@ -11,7 +11,7 @@ class Stock extends Model
     protected $fillable = [
         'stockName',
         'stockPhoto',
-        'Department',
+        'Course',
         'Gender',
         'Type',
         'Body',

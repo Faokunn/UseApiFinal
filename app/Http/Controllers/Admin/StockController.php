@@ -13,8 +13,8 @@ class StockController extends Controller
         return response()->json($data);
     }
 
-    public function show($Department){
-        $data = Stock::where('Department', $Department)->get();
+    public function show($Course){
+        $data = Stock::where('Course', $Course)->get();
         return response()->json($data);
     }
 

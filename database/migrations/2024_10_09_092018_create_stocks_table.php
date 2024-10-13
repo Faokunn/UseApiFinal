@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('stockName');
             $table->string('stockPhoto');
-            $table->string('Department');
+            $table->string('Course');
+            $table->string('Gender');
+            $table->string('Type');
+            $table->string('Body');
         });
     }
 

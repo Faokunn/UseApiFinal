@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('item_books', function (Blueprint $table) {
             $table->id();
+            $table->string('Course');
             $table->string('Department'); 
             $table->string('BookName');
             $table->string('SubjectCode');

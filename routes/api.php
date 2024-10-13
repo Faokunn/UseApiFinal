@@ -94,10 +94,10 @@ Route::get('/courses/{$departmentID}', [CourseController::class, 'show']);
 
 // Stock
 Route::apiResource('stocks', StockController::class);
-Route::get('/stocks/{$Department}', [StockController::class, 'show']);
+Route::get('/stocks/{Course}', [StockController::class, 'show']);
 
 // Uniform custom routes
-Route::get('/uniforms/{Course}', [ItemrsoController::class, 'show']);
+Route::get('/uniforms/{Course}/{Gender}/{Type}/{Body}', [ItemrsoController::class, 'show']);
 Route::put('/uniforms/stock/{department}/{course}/{gender}/{type}/{body}/{size}', [ItemrsoController::class, 'specificUniform']);
 Route::put('/uniforms/reducestock/{count}/{department}/{course}/{gender}/{type}/{body}/{size}', [ItemrsoController::class, 'reduceStock']);
 Route::put('/books/reducestock/{count}/{department}/{bookname}/{subcode}/{subdesc}', [ItemBookController::class, 'reduceStock']);

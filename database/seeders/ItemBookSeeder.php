@@ -17,6 +17,7 @@ class ItemBookSeeder extends Seeder
             // CAHS
             // BSPHA
             [
+                'Course' => 'BSPHA',
                 'Department' => 'CAHS',
                 'BookName' => 'Physical Pharmacy and sciences',
                 'SubjectCode' => 'PHA 009',
@@ -25,6 +26,7 @@ class ItemBookSeeder extends Seeder
                 'Reserved' => '0',
             ],
             [
+                'Course' => 'BSPHA',
                 'Department' => 'CAHS',
                 'BookName' => 'Phytochemical and Biological',
                 'SubjectCode' => 'PHA 302',
@@ -33,6 +35,7 @@ class ItemBookSeeder extends Seeder
                 'Reserved' => '0',
             ],
             [
+                'Course' => 'BSPHA',
                 'Department' => 'CAHS',
                 'BookName' => 'Basic and Clinical Pharmacology',
                 'SubjectCode' => 'PHA 042',
@@ -41,6 +44,7 @@ class ItemBookSeeder extends Seeder
                 'Reserved' => '0',
             ],
             [
+                'Course' => 'BSPHA',
                 'Department' => 'CAHS',
                 'BookName' => 'Pharmaceutical Calculations 15th Edition',
                 'SubjectCode' => 'NUR 001',
@@ -48,7 +52,9 @@ class ItemBookSeeder extends Seeder
                 'Stock' => '10',
                 'Reserved' => '0',
             ],
+            // BSN
             [
+                'Course' => 'BSN',
                 'Department' => 'CAHS',
                 'BookName' => 'Medical Surgical Nursing',
                 'SubjectCode' => 'NUR 156',
@@ -57,6 +63,7 @@ class ItemBookSeeder extends Seeder
                 'Reserved' => '0',
             ],
             [
+                'Course' => 'BSN',
                 'Department' => 'CAHS',
                 'BookName' => 'Community and Public Health Nursing',
                 'SubjectCode' => 'HES 006',
@@ -64,7 +71,9 @@ class ItemBookSeeder extends Seeder
                 'Stock' => '10',
                 'Reserved' => '0',
             ],
+            // BSMLS
             [
+                'Course' => 'BSMLS',
                 'Department' => 'CAHS',
                 'BookName' => 'Strasinger and Lorenzo Urinalysis',
                 'SubjectCode' => 'MLS 065',
@@ -73,6 +82,7 @@ class ItemBookSeeder extends Seeder
                 'Reserved' => '0',
             ],
             [
+                'Course' => 'BSMLS',
                 'Department' => 'CAHS',
                 'BookName' => 'Gregorio Histopathologic Techniques',
                 'SubjectCode' => 'MLS 043',
@@ -83,38 +93,38 @@ class ItemBookSeeder extends Seeder
             
 
 
-            [
-                'Department' => 'CMA',
-                'BookName' => 'Basic financial accounting and regulations',
-                'SubjectCode' => 'ACC 102',
-                'SubjectDesc' => 'Conceptual framework and accounting standards',
-                'Stock' => '10',
-                'Reserved' => '0',
-            ],
-            [
-                'Department' => 'CMA',
-                'BookName' => 'Managerial economics',
-                'SubjectCode' => 'BAM 040',
-                'SubjectDesc' => 'Law on obligations and contracts',
-                'Stock' => '10',
-                'Reserved' => '0',
-            ],
-            [
-                'Department' => 'CMA',
-                'BookName' => 'Income taxation',
-                'SubjectCode' => 'FIN 081',
-                'SubjectDesc' => 'Financial management',
-                'Stock' => '10',
-                'Reserved' => '0',
-            ],
-            [
-                'Department' => 'CMA',
-                'BookName' => 'Business taxation',
-                'SubjectCode' => 'ACC 111',
-                'SubjectDesc' => 'Business law and regulations',
-                'Stock' => '10',
-                'Reserved' => '0',
-            ],
+            // [
+            //     'Department' => 'CMA',
+            //     'BookName' => 'Basic financial accounting and regulations',
+            //     'SubjectCode' => 'ACC 102',
+            //     'SubjectDesc' => 'Conceptual framework and accounting standards',
+            //     'Stock' => '10',
+            //     'Reserved' => '0',
+            // ],
+            // [
+            //     'Department' => 'CMA',
+            //     'BookName' => 'Managerial economics',
+            //     'SubjectCode' => 'BAM 040',
+            //     'SubjectDesc' => 'Law on obligations and contracts',
+            //     'Stock' => '10',
+            //     'Reserved' => '0',
+            // ],
+            // [
+            //     'Department' => 'CMA',
+            //     'BookName' => 'Income taxation',
+            //     'SubjectCode' => 'FIN 081',
+            //     'SubjectDesc' => 'Financial management',
+            //     'Stock' => '10',
+            //     'Reserved' => '0',
+            // ],
+            // [
+            //     'Department' => 'CMA',
+            //     'BookName' => 'Business taxation',
+            //     'SubjectCode' => 'ACC 111',
+            //     'SubjectDesc' => 'Business law and regulations',
+            //     'Stock' => '10',
+            //     'Reserved' => '0',
+            // ],
 
             // CEA
 
