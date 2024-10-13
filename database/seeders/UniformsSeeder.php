@@ -1390,6 +1390,7 @@ class UniformsSeeder extends Seeder
                 'Reserved' => '0',
             ],
 
+            //CELA
             // CORPO Shirt
             [
                 'Department' => 'CMA',
@@ -1515,11 +1516,11 @@ class UniformsSeeder extends Seeder
             ],
 
             //CELA
-            //BSED
+            //BSPOLSCI
             // CORPO Shirt
             [
                 'Department' => 'CELA',
-                'Course' => 'BSED',
+                'Course' => 'BSPOLSCI',
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
                 'Body' => 'Shirt',
@@ -1529,7 +1530,7 @@ class UniformsSeeder extends Seeder
             ],
             [
                 'Department' => 'CELA',
-                'Course' => 'BSED',
+                'Course' => 'BSPOLSCI',
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
                 'Body' => 'Shirt',
@@ -1539,7 +1540,7 @@ class UniformsSeeder extends Seeder
             ],
             [
                 'Department' => 'CELA',
-                'Course' => 'BSED',
+                'Course' => 'BSPOLSCI',
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
                 'Body' => 'Shirt',
@@ -1549,7 +1550,7 @@ class UniformsSeeder extends Seeder
             ],
             [
                 'Department' => 'CELA',
-                'Course' => 'BSED',
+                'Course' => 'BSPOLSCI',
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
                 'Body' => 'Shirt',
@@ -1560,7 +1561,7 @@ class UniformsSeeder extends Seeder
             //CORPO Pants
             [
                 'Department' => 'CELA',
-                'Course' => 'BSED',
+                'Course' => 'BSPOLSCI',
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
                 'Body' => 'Pants',
@@ -1570,7 +1571,7 @@ class UniformsSeeder extends Seeder
             ],
             [
                 'Department' => 'CELA',
-                'Course' => 'BSED',
+                'Course' => 'BSPOLSCI',
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
                 'Body' => 'Pants',
@@ -1580,7 +1581,7 @@ class UniformsSeeder extends Seeder
             ],
             [
                 'Department' => 'CELA',
-                'Course' => 'BSED',
+                'Course' => 'BSPOLSCI',
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
                 'Body' => 'Pants',
@@ -1590,7 +1591,7 @@ class UniformsSeeder extends Seeder
             ],
             [
                 'Department' => 'CELA',
-                'Course' => 'BSED',
+                'Course' => 'BSPOLSCI',
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
                 'Body' => 'Pants',
@@ -1601,7 +1602,7 @@ class UniformsSeeder extends Seeder
             // RSO
             [
                 'Department' => 'CELA',
-                'Course' => 'BSED',
+                'Course' => 'BSPOLSCI',
                 'Gender' => 'Male',
                 'Type' => 'RSO',
                 'Body' => 'Shirt',
@@ -1611,7 +1612,7 @@ class UniformsSeeder extends Seeder
             ],
             [
                 'Department' => 'CELA',
-                'Course' => 'BSED',
+                'Course' => 'BSPOLSCI',
                 'Gender' => 'Male',
                 'Type' => 'RSO',
                 'Body' => 'Shirt',
@@ -1621,7 +1622,7 @@ class UniformsSeeder extends Seeder
             ],
             [
                 'Department' => 'CELA',
-                'Course' => 'BSED',
+                'Course' => 'BSPOLSCI',
                 'Gender' => 'Male',
                 'Type' => 'RSO',
                 'Body' => 'Shirt',
@@ -1631,7 +1632,7 @@ class UniformsSeeder extends Seeder
             ],
             [
                 'Department' => 'CELA',
-                'Course' => 'BSED',
+                'Course' => 'BSPOLSCI',
                 'Gender' => 'Male',
                 'Type' => 'Rso',
                 'Body' => 'Shirt',
