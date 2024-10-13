@@ -280,7 +280,7 @@ class StudentBagItemController extends Controller
             $item->status = $status;
             $item->claiming_schedule = null;
             $item->code = null;
-            $requestController->reduceStock(1,  $course, $gender, $type, $body, $size,'stocks');
+            $requestController->reduceStock(1,  $course, $gender, $type, $body, $size,'stock');
             $departmentController->displaycounts($items->Department, 1, 'complete', 'add');
             $departmentController->displaycounts($items->Department, 1, 'claim', 'subtract');
         }
@@ -292,7 +292,7 @@ class StudentBagItemController extends Controller
 
     public function changeRequestStatus($id, $status)
     {
-        $item = StudentBagItem::where('id',$id)->first();
+        $item = StudentBagItem::find($id);
         $scheduleA = ["Monday", "Tuesday", "Wednesday"];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
 
@@ -361,7 +361,10 @@ class StudentBagItemController extends Controller
                 if ($responseClaim->getStatusCode() !== 200) {
                     return $responseClaim; // Return error response from displaycounts if not successful
                 }
-                $requestController->reduceStock(1,  $course, $gender, $type, $body, $size,'stocks');
+                $responseCClaim = $requestController->reduceStock(1,  $course, $gender, $type, $body, $size,'stock');
+                if ($responseCClaim->getStatusCode() !== 200) {
+                    return $responseClaim; // Return error response from displaycounts if not successful
+                }
             }
         }
 

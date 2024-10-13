@@ -46,7 +46,7 @@ class ItemrsoController extends Controller
                ->first();
    
          if (!$item) {
-               return response()->json(['message' => 'Item not found'], 404);
+               return response()->json(['message' => 'Item not found ReduceStock'], 404);
          }
          if($logic == 'stock'){
             if ($count <= 0) {
@@ -100,7 +100,7 @@ class ItemrsoController extends Controller
                ->first();
 
       if (!$item) {
-         return response()->json(['message' => 'Item not found'], 404);
+         return response()->json(["message' => 'Item not found specificForm {$department}, {$course}, {$gender}, {$type}, {$body}, {$size}"], 404);
       }
 
       return response()->json(['stock' => $item->Stock], 200);

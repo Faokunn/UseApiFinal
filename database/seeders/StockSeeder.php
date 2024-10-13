@@ -15,20 +15,20 @@ class StockSeeder extends Seeder
             // CITE
             // BSIT
             [
-                'stockName' => 'Corporate Shirt',
+                'stockName' => 'Corporate',
                 'stockPhoto' => 'PLACEHOLDER',
                 'Course' => 'BSIT',
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
-                'Body' => 'Upper',
+                'Body' => 'Shirt',
             ],
             [
-                'stockName' => 'Corporate Pants',
+                'stockName' => 'Corporate',
                 'stockPhoto' => 'PLACEHOLDER',
                 'Course' => 'BSIT',
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
-                'Body' => 'Lower',
+                'Body' => 'Pants',
             ],
             [
                 'stockName' => 'RSO',
@@ -36,26 +36,26 @@ class StockSeeder extends Seeder
                 'Course' => 'BSIT',
                 'Gender' => 'Male',
                 'Type' => 'RSO',
-                'Body' => 'Upper',
+                'Body' => 'Shirt',
             ],
 
             // CAHS
             // BSN
             [
-                'stockName' => 'Corporate Shirt',
+                'stockName' => 'Corporate',
                 'stockPhoto' => 'PLACEHOLDER',
                 'Course' => 'BSN',
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
-                'Body' => 'Upper',
+                'Body' => 'Shirt',
             ],
             [
-                'stockName' => 'Corporate Pants',
+                'stockName' => 'Corporate',
                 'stockPhoto' => 'PLACEHOLDER',
                 'Course' => 'BSN',
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
-                'Body' => 'Lower',
+                'Body' => 'Pants',
             ],
             [
                 'stockName' => 'RSO',
@@ -63,7 +63,7 @@ class StockSeeder extends Seeder
                 'Course' => 'BSN',
                 'Gender' => 'Male',
                 'Type' => 'RSO',
-                'Body' => 'Upper',
+                'Body' => 'Shirt',
             ],
 
             // BSMLS
@@ -73,7 +73,7 @@ class StockSeeder extends Seeder
                 'Course' => 'BSMLS',
                 'Gender' => 'Male',
                 'Type' => 'Corporate',
-                'Body' => 'Upper',
+                'Body' => 'Shirt',
             ],
             [
                 'stockName' => 'RSO',
@@ -81,7 +81,7 @@ class StockSeeder extends Seeder
                 'Course' => 'BSMLS',
                 'Gender' => 'Male',
                 'Type' => 'RSO',
-                'Body' => 'Upper',
+                'Body' => 'Shirt',
             ],
             // BSPHARMA
             // BSPSYCH

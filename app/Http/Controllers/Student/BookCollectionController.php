@@ -255,7 +255,7 @@ class BookCollectionController extends Controller
     }
 
     public function changeRequestStatus($id, $status){
-        $bookCollection = BookCollection::where('id',$id)->first();
+        $bookCollection = BookCollection::find($id);
         $scheduleA = ["Monday", "Tuesday", "Wednesday",];
         $scheduleB = ["Thursday", "Friday", "Saturday"];
 
@@ -313,7 +313,7 @@ class BookCollectionController extends Controller
                 $bookCollection->status = 'Claim';
                 $bookCollection->reservationNumber = null;
                 $departmentController->displaycounts($bookCollection->Department, 1, 'claim', 'add');
-                $requestController->reduceStock(1, $bookname, "stocks");
+                $requestController->reduceStock(1, $bookname, "stock");
             } 
         }
         $bookCollection->save();

@@ -39,12 +39,12 @@ class ItemBookController extends Controller
                ->first();
    
          if (!$item) {
-               return response()->json(['message' => 'Book not found'], 404);
+               return response()->json(["message' => 'Book not found {$bookname}"], 404);
          }
          
          if ($logic == 'stock') {
             if ($count <= 0) {
-                  return response()->json(['message' => 'Invalid stock reduction count'], 400);
+                  return response()->json(["message' => 'Invalid stock reduction count {$bookname}"], 400);
             }
       
             if ($item->Stock < $count) {
@@ -59,7 +59,7 @@ class ItemBookController extends Controller
             $item->Reserved += $count;
             $item->save();
       
-            return response()->json(['message' => 'Reserved increased successfully'], 200);
+            return response()->json(["message' => 'Reserved increased successfully {$bookname}"], 200);
          }else if($logic == 'claim'){
             $item->Reserved -= $count;
             $item->save();

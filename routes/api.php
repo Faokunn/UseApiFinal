@@ -96,6 +96,8 @@ Route::get('/courses/{$departmentID}', [CourseController::class, 'show']);
 Route::apiResource('stocks', StockController::class);
 Route::get('/stocks/{Course}', [StockController::class, 'show']);
 
+Route::put('test/{count}/{bookname}/{logic}', [ItemBookController::class, 'reduceStock']);
+
 // Uniform custom routes
 Route::get('/uniforms/{Course}/{Gender}/{Type}/{Body}', [ItemrsoController::class, 'show']);
 Route::put('/uniforms/stock/{department}/{course}/{gender}/{type}/{body}/{size}', [ItemrsoController::class, 'specificUniform']);
