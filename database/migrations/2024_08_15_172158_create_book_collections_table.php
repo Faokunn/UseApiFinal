@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('SubjectCode');
             $table->string('SubjectDesc');
             $table->string('code')->nullable();
-            $table->string('status');
+            $table->string('Status');
             $table->integer('reservationNumber')->nullable();
             $table->string('claiming_schedule')->nullable(); 
             $table->string('shift')->nullable();

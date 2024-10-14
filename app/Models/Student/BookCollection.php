@@ -16,7 +16,7 @@ class BookCollection extends Model
         'SubjectCode',   
         'SubjectDesc',    
         'code',
-        'status',          
+        'Status',          
         'claiming_schedule',
         'shift',
         'stubag_id',
