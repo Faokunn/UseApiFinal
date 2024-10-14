@@ -37,7 +37,7 @@ class BookCollectionController extends Controller
             'SubjectCode' => 'nullable|string|max:255',
             'SubjectDesc' => 'nullable|string|max:255',
             'code' => 'nullable|string|max:5',
-            'status' => 'required|string|max:255',
+            'Status' => 'required|string|max:255',
             'claiming_schedule' => 'nullable|string|max:255',
             'shift' => "nullable|string|max:255",
             'stubag_id' => 'required|integer|exists:student_bags,id',
