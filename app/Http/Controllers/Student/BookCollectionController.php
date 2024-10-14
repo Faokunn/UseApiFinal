@@ -220,7 +220,7 @@ class BookCollectionController extends Controller
             ->max('reservationNumber');
             $requestController->reduceStock(1, $bookname, "reserved");
             $departmentController->displaycounts($bookCollection->Department, 1, 'reserved', 'add');
-            $bookCollection->status = 'Reserved';
+            $bookCollection->Status = 'Reserved';
             $bookCollection->reservationNumber = ++$highestReservation;
             $bookCollection->save();
         }
@@ -235,7 +235,7 @@ class BookCollectionController extends Controller
             else{
                 return response()->json(['message' => 'Department not found in either shift'], status: 400);
             }
-            $bookCollection->status = $status;
+            $bookCollection->Status = $status;
             $bookCollection->reservationNumber = null;
             $departmentController->displaycounts($bookCollection->Department, 1, 'claim', 'add');
             $departmentController->displaycounts($bookCollection->Department, 1, 'reserved', 'subtract');
@@ -243,7 +243,7 @@ class BookCollectionController extends Controller
 
         if($status == 'Complete'){
             $bookCollection->dateReceived = now();
-            $bookCollection->status = $status;
+            $bookCollection->Status = $status;
             $bookCollection->claiming_schedule = null;
             $bookCollection->code = null;
             $departmentController->displaycounts($bookCollection->Department, 1, 'complete', 'add');
@@ -294,7 +294,7 @@ class BookCollectionController extends Controller
                 where('BookName', $bookCollection->BookName)
                 ->max('reservationNumber');
     
-                $bookCollection->status = 'Reserved';
+                $bookCollection->Status = 'Reserved';
                 $bookCollection->reservationNumber = ++$highestReservation;
                 $bookCollection->save();
                 $departmentController->displaycounts($bookCollection->Department, 1, 'reserved', 'add');
@@ -310,7 +310,7 @@ class BookCollectionController extends Controller
                 else{
                     return response()->json(['message' => 'Department not found in either shift'], status: 400);
                 }
-                $bookCollection->status = 'Claim';
+                $bookCollection->Status = 'Claim';
                 $bookCollection->reservationNumber = null;
                 $departmentController->displaycounts($bookCollection->Department, 1, 'claim', 'add');
                 $requestController->reduceStock(1, $bookname, "stock");
@@ -342,7 +342,7 @@ class BookCollectionController extends Controller
                 return response()->json(['message' => 'Department not found in either shift'], 400);
             }
     
-            $books->status = 'Claim';
+            $books->Status = 'Claim';
             $books->reservationNumber = null;
             $departmentController->displaycounts($books->Department, 1, 'claim', 'add');
             $departmentController->displaycounts($books->Department, 1, 'reserved', 'subtract');
